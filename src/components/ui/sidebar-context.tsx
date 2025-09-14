@@ -132,4 +132,4 @@ const SidebarProvider = React.forwardRef<
 )
 SidebarProvider.displayName = "SidebarProvider"
 
-export { SidebarProvider }
+export { SidebarProvider, useSidebar }
