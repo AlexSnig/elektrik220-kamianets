@@ -1,0 +1,283 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Award, Shield, Users, Clock, CheckCircle, Zap, Phone } from 'lucide-react';
+import { useApp } from '../contexts/AppContext';
+
+const AboutSection: React.FC = () => {
+  const { state } = useApp();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const companyData = state.companyData;
+  const phoneNumber = companyData?.contact.phones.find(p => p.primary)?.number || '+380 97 123 45 67';
+
+  const achievements = [
+    {
+      icon: Users,
+      value: companyData?.company.completed_projects || '2000+',
+      label: 'Задоволених клієнтів',
+      description: 'За час роботи ми допомогли тисячам клієнтів',
+    },
+    {
+      icon: Clock,
+      value: companyData?.company.experience || '10+',
+      label: 'Років на ринку',
+      description: 'Багаторічний досвід у сфері електромонтажу',
+    },
+    {
+      icon: Shield,
+      value: companyData?.company.guarantee || '5',
+      label: 'Років гарантії',
+      description: 'Довгострокова гарантія на всі роботи',
+    },
+    {
+      icon: Award,
+      value: '100%',
+      label: 'Якості робіт',
+      description: 'Використовуємо тільки якісні матеріали',
+    },
+  ];
+
+  const advantages = [
+    {
+      icon: Zap,
+      title: 'Швидкий відгук',
+      description: 'Приїжджаємо протягом 30 хвилин у Кам\'янці-Подільському',
+    },
+    {
+      icon: Shield,
+      title: 'Гарантія безпеки',
+      description: 'Всі роботи виконуємо згідно з нормами безпеки та стандартами',
+    },
+    {
+      icon: Award,
+      title: 'Сертифіковані майстри',
+      description: 'Команда професіоналів з офіційними допусками та сертифікатами',
+    },
+    {
+      icon: Users,
+      title: 'Індивідуальний підхід',
+      description: 'Знаходимо оптимальне рішення для кожного клієнта',
+    },
+  ];
+
+  return (
+    <section id="about" className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Content */}
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, x: -50 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <Award className="w-4 h-4" />
+              <span>Про нашу команду</span>
+            </div>
+
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Професійні електрики
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
+                з багаторічним досвідом
+              </span>
+            </h2>
+
+            <p className="text-xl text-gray-600 mb-8">
+              {companyData?.company.description || 
+                'Ми - команда кваліфікованих електриків з багаторічним досвідом роботи в Кам\'янці-Подільському. Спеціалізуємося на всіх видах електромонтажних робіт від дрібного ремонту до повного електромонтажу.'}
+            </p>
+
+            {/* Advantages */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              {advantages.map((advantage, index) => (
+                <motion.div
+                  key={index}
+                  className="flex items-start space-x-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <advantage.icon className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{advantage.title}</h3>
+                    <p className="text-gray-600">{advantage.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Certificates */}
+            {companyData?.certificates && (
+              <motion.div
+                className="mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <Award className="w-5 h-5 text-blue-600 mr-2" />
+                  Наші сертифікати та допуски:
+                </h3>
+                <div className="space-y-2">
+                  {companyData.certificates.map((cert, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span className="text-gray-700">{cert}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* CTA */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <a
+                href={`tel:${phoneNumber}`}
+                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2"
+              >
+                <Phone className="w-5 h-5" />
+                <span>Безкоштовна консультація</span>
+              </a>
+              <button
+                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200"
+              >
+                Переглянути послуги
+              </button>
+            </motion.div>
+          </motion.div>
+
+          {/* Achievements & Image */}
+          <motion.div
+            className="space-y-8"
+            initial={{ opacity: 0, x: 50 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            {/* Image */}
+            <div className="relative">
+              <motion.div
+                className="relative z-10 rounded-2xl overflow-hidden shadow-2xl"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <img
+                  src="/images/tools-background.jpg"
+                  alt="Професійні інструменти електрика"
+                  className="w-full h-[400px] object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+              </motion.div>
+
+              {/* Floating Elements */}
+              <motion.div
+                className="absolute -top-6 -left-6 bg-white p-4 rounded-2xl shadow-xl"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: 1 }}
+                whileHover={{ y: -5 }}
+              >
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600">24/7</div>
+                  <div className="text-sm text-gray-600">Аварійний виклик</div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="absolute -bottom-6 -right-6 bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-2xl shadow-xl"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: 1.2 }}
+                whileHover={{ y: -5 }}
+              >
+                <div className="text-center">
+                  <div className="text-2xl font-bold">5</div>
+                  <div className="text-sm">років гарантії</div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Achievements Grid */}
+            <div className="grid grid-cols-2 gap-6">
+              {achievements.map((achievement, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-gray-50 p-6 rounded-2xl text-center hover:bg-white hover:shadow-lg transition-all duration-300"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <achievement.icon className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div className="text-3xl font-bold text-gray-900 mb-2">{achievement.value}</div>
+                  <div className="text-sm font-medium text-gray-900 mb-1">{achievement.label}</div>
+                  <div className="text-xs text-gray-600">{achievement.description}</div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Working Process */}
+        <motion.div
+          className="mt-20"
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">Як ми працюємо</h3>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Простий та прозорий процес співпраці від дзвінка до завершення робіт
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { step: '1', title: 'Дзвінок', desc: 'Зв\'язуйтеся з нами будь-яким зручним способом' },
+              { step: '2', title: 'Діагностика', desc: 'Виїжджаємо та проводимо безкоштовну діагностику' },
+              { step: '3', title: 'Роботи', desc: 'Виконуємо роботи якісно та в обумовлені терміни' },
+              { step: '4', title: 'Гарантія', desc: 'Надаємо гарантію та подальшу підтримку' },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="text-center relative"
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+              >
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
+                  {item.step}
+                </div>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h4>
+                <p className="text-gray-600">{item.desc}</p>
+                
+                {/* Connector Line */}
+                {index < 3 && (
+                  <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-blue-300 to-transparent -z-10"></div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default AboutSection;

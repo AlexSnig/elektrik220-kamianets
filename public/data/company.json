@@ -1,0 +1,54 @@
+{
+  "company": {
+    "name": "ЕлектроСервіс Кам'янець",
+    "tagline": "Ваш надійний електрик у Кам'янці-Подільському",
+    "description": "Професійні електричні послуги з гарантією якості. Понад 10 років досвіду роботи в галузі електромонтажу.",
+    "experience": "10+ років",
+    "completed_projects": "2000+",
+    "guarantee": "5 років",
+    "response_time": "30 хвилин",
+    "services_count": 8
+  },
+  "contact": {
+    "phones": [
+      {
+        "number": "+380 97 123 45 67",
+        "type": "Viber",
+        "primary": true
+      },
+      {
+        "number": "+380 63 987 65 43",
+        "type": "Telegram",
+        "primary": false
+      }
+    ],
+    "email": "info@elektroservice-kam.ua",
+    "address": {
+      "street": "вул. Соборна, 15",
+      "city": "Кам'янець-Подільський",
+      "region": "Хмельницька область",
+      "postal_code": "32300",
+      "coordinates": {
+        "lat": 48.6823,
+        "lng": 26.5836
+      }
+    },
+    "working_hours": {
+      "monday_friday": "8:00 - 20:00",
+      "saturday": "9:00 - 18:00",
+      "sunday": "Аварійний виклик",
+      "emergency": "24/7"
+    }
+  },
+  "certificates": [
+    "Дозвіл на роботи підвищеної небезпеки",
+    "Сертифікат електромонтажника 4 розряду",
+    "Допуск до робіт до 1000В",
+    "Сертифікат з охорони праці"
+  ],
+  "social_media": {
+    "facebook": "https://facebook.com/elektroservice.kam",
+    "instagram": "https://instagram.com/elektroservice_kam",
+    "telegram": "https://t.me/elektroservice_kam"
+  }
+}
