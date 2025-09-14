@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Menu, X, Zap, Clock, Shield } from 'lucide-react';
-import { useApp } from '../contexts/AppContext';
+import { useApp } from '../hooks/use-app';
 
 const Header: React.FC = () => {
   const { state } = useApp();
@@ -35,7 +35,7 @@ const Header: React.FC = () => {
     }
   };
 
-  const phoneNumber = state.companyData?.contact.phones.find(p => p.primary)?.number || '+380 97 123 45 67';
+  const phoneNumber = state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380 97 123 45 67';
 
   return (
     <>
@@ -64,7 +64,7 @@ const Header: React.FC = () => {
                   ЕлектроСервіс
                 </h1>
                 <p className="text-xs lg:text-sm text-gray-600 leading-none">
-                  Кам'янець-Подільський
+                  Кам&#39;янець-Подільський
                 </p>
               </div>
             </motion.div>
@@ -92,6 +92,14 @@ const Header: React.FC = () => {
                   <Clock className="w-3 h-3 mr-1" />
                   24/7 аварійний виклик
                 </div>
+                <a
+                  href="https://www.google.com/maps/place/?q=place_id:ChIJKx7hfRfHM0cR9gFI8ZPSvl4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 text-xs underline mt-1 block"
+                >
+                  Ми на Google Maps
+                </a>
               </div>
               <motion.a
                 href={`tel:${phoneNumber}`}
@@ -111,7 +119,7 @@ const Header: React.FC = () => {
               whileTap={{ scale: 0.95 }}
             >
               {isMenuOpen ? (
-                <X className="w-6 h-6 text-gray-900" />
+                <Zap className="w-6 h-6 text-gray-900" />
               ) : (
                 <Menu className="w-6 h-6 text-gray-900" />
               )}
@@ -120,13 +128,12 @@ const Header: React.FC = () => {
         </div>
 
         {/* Trust Indicators Bar */}
-        {!isScrolled && (
-          <motion.div
-            className="hidden lg:block bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-blue-100"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            transition={{ delay: 0.3 }}
-          >
+        <motion.div
+          className="hidden lg:block bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-blue-100"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          transition={{ delay: 0.3 }}
+        >
             <div className="container mx-auto px-4 py-2">
               <div className="flex items-center justify-center space-x-8 text-sm text-gray-600">
                 <div className="flex items-center space-x-2">
@@ -144,7 +151,6 @@ const Header: React.FC = () => {
               </div>
             </div>
           </motion.div>
-        )}
       </motion.header>
 
       {/* Mobile Menu */}
@@ -158,7 +164,7 @@ const Header: React.FC = () => {
           >
             {/* Backdrop */}
             <motion.div
-              className="absolute inset-0 bg-black/50"
+              className="absolute top-16 lg:top-20 left-0 right-0 bottom-0 bg-black/50"
               onClick={() => setIsMenuOpen(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -167,7 +173,7 @@ const Header: React.FC = () => {
 
             {/* Menu Panel */}
             <motion.div
-              className="absolute top-0 right-0 w-80 h-full bg-white shadow-2xl"
+              className="absolute top-16 lg:top-20 right-0 w-80 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-white shadow-2xl"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -181,7 +187,7 @@ const Header: React.FC = () => {
                     </div>
                     <div>
                       <h2 className="text-lg font-bold text-gray-900">ЕлектроСервіс</h2>
-                      <p className="text-sm text-gray-600">Кам'янець-Подільський</p>
+                      <p className="text-sm text-gray-600">Кам&#39;янець-Подільський</p>
                     </div>
                   </div>
                   <button

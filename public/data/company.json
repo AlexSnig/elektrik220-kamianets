@@ -1,54 +1,48 @@
 {
   "company": {
-    "name": "ЕлектроСервіс Кам'янець",
+    "name": "Електрик 220В",
     "tagline": "Ваш надійний електрик у Кам'янці-Подільському",
-    "description": "Професійні електричні послуги з гарантією якості. Понад 10 років досвіду роботи в галузі електромонтажу.",
-    "experience": "10+ років",
+    "description": "Професійні електромонтажні послуги в Кам'янці-Подільському. Швидкий та якісний сервіс 24/7 з гарантією на виконані роботи. Досвід більше 10 років та добра репутація в місті. Консультації по телефону. Закупівля та доставка матеріалів. Оплата після виконання робіт.",
+    "experience": "більше 10 років",
     "completed_projects": "2000+",
-    "guarantee": "5 років",
-    "response_time": "30 хвилин",
-    "services_count": 8
+    "guarantee": "від 3-х років",
+    "response_time": "до 1 години",
+    "services_count": 12
   },
   "contact": {
     "phones": [
       {
-        "number": "+380 97 123 45 67",
+        "number": "+380677523103",
         "type": "Viber",
         "primary": true
-      },
-      {
-        "number": "+380 63 987 65 43",
-        "type": "Telegram",
-        "primary": false
       }
     ],
-    "email": "info@elektroservice-kam.ua",
+    "email": "info@elektrik220.km.ua",
     "address": {
-      "street": "вул. Соборна, 15",
+      "street": "Рiчна 11",
       "city": "Кам'янець-Подільський",
       "region": "Хмельницька область",
       "postal_code": "32300",
       "coordinates": {
-        "lat": 48.6823,
-        "lng": 26.5836
+        "lat": 48.675,
+        "lng": 26.58
       }
     },
     "working_hours": {
-      "monday_friday": "8:00 - 20:00",
-      "saturday": "9:00 - 18:00",
-      "sunday": "Аварійний виклик",
+      "monday_saturday": "09:00 - 18:00",
       "emergency": "24/7"
     }
   },
   "certificates": [
     "Дозвіл на роботи підвищеної небезпеки",
-    "Сертифікат електромонтажника 4 розряду",
-    "Допуск до робіт до 1000В",
-    "Сертифікат з охорони праці"
+    "Сертифікат електромонтажника",
+    "Допуск до робіт до 1000В"
   ],
   "social_media": {
-    "facebook": "https://facebook.com/elektroservice.kam",
-    "instagram": "https://instagram.com/elektroservice_kam",
-    "telegram": "https://t.me/elektroservice_kam"
+    "facebook": "https://www.facebook.com/ElektrikKamPod/",
+    "instagram": "https://www.instagram.com/elektrik_kamenec_podolsky",
+    "telegram": "https://t.me/Elektrik220B",
+    "twitter": "https://twitter.com/Elektrik220B",
+    "tiktok": "https://www.tiktok.com/@elektrikkampod"
   }
 }

@@ -8,17 +8,15 @@ import { cn } from "@/lib/utils"
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
-export type ChartConfig = {
-  [k in string]: {
+export type ChartConfig = Record<string, {
     label?: React.ReactNode
     icon?: React.ComponentType
   } & (
     | { color?: string; theme?: never }
     | { color?: never; theme: Record<keyof typeof THEMES, string> }
-  )
-}
+  )>
 
-type ChartContextProps = {
+interface ChartContextProps {
   config: ChartConfig
 }
 
@@ -44,7 +42,7 @@ const ChartContainer = React.forwardRef<
   }
 >(({ id, className, children, config, ...props }, ref) => {
   const uniqueId = React.useId()
-  const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
+  const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`
 
   return (
     <ChartContext.Provider value={{ config }}>
@@ -68,9 +66,7 @@ const ChartContainer = React.forwardRef<
 ChartContainer.displayName = "Chart"
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme || config.color
-  )
+  const colorConfig = Object.entries(config).filter(([, cfg]) => Boolean(cfg.theme ?? cfg.color))
 
   if (!colorConfig.length) {
     return null
@@ -80,24 +76,60 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     <style
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
-  })
-  .join("\n")}
-}
-`
-          )
+          .map(([theme, prefix]) => {
+                  return `
+      ${prefix} [data-chart=${id}] {
+      ${colorConfig
+        .map(([key, itemConfig]) => {
+          const color = itemConfig.theme?.[theme as keyof typeof THEMES] ?? itemConfig.color
+          return color ? `  --color-${key}: ${color};` : null
+        })
+        .join("\n")}
+      }
+      `
+                })
           .join("\n"),
       }}
     />
   )
+}
+
+// Small runtime type-helpers to safely operate on unknown payloads from Recharts.
+function isRecord(v: unknown): v is Record<string, unknown> {
+  return typeof v === "object" && v !== null
+}
+
+function safeValueToString(v: unknown) {
+  if (typeof v === "number") return v.toLocaleString()
+  if (typeof v === "string") return v
+  try {
+    return JSON.stringify(v) || ""
+  } catch {
+    return ""
+  }
+}
+
+function resolveKeyFromItem(item: unknown, nameKey?: string, labelKey?: string) {
+  if (!isRecord(item)) return "value"
+  const rec = item
+
+  if (labelKey) {
+    const v = rec[labelKey]
+    if (typeof v === "string" || typeof v === "number") return String(v)
+  }
+
+  if (nameKey) {
+    const v = rec[nameKey]
+    if (typeof v === "string" || typeof v === "number") return String(v)
+  }
+
+  const name = rec.name
+  if (typeof name === "string" || typeof name === "number") return String(name)
+
+  const dataKey = rec.dataKey
+  if (typeof dataKey === "string" || typeof dataKey === "number") return String(dataKey)
+
+  return "value"
 }
 
 const ChartTooltip = RechartsPrimitive.Tooltip
@@ -133,18 +165,30 @@ const ChartTooltipContent = React.forwardRef<
   ) => {
     const { config } = useChart()
 
+    interface ChartPayloadItem {
+      dataKey?: string | number
+      name?: string
+      value?: unknown
+      payload?: Record<string, unknown>
+      color?: string
+    }
+
     const tooltipLabel = React.useMemo(() => {
       if (hideLabel || !payload?.length) {
         return null
       }
 
-      const [item] = payload
-      const key = `${labelKey || item.dataKey || item.name || "value"}`
-      const itemConfig = getPayloadConfigFromPayload(config, item, key)
-      const value =
-        !labelKey && typeof label === "string"
-          ? config[label as keyof typeof config]?.label || label
-          : itemConfig?.label
+  const first = payload[0]
+  const item = isRecord(first) ? first : undefined
+  const key = labelKey ?? resolveKeyFromItem(item, nameKey, labelKey)
+  const itemConfig = getPayloadConfigFromPayload(config, item, key)
+
+      let value: React.ReactNode | undefined
+      if (!labelKey && typeof label === "string") {
+        value = config[String(label)]?.label ?? label
+      } else {
+        value = itemConfig?.label
+      }
 
       if (labelFormatter) {
         return (
@@ -167,6 +211,7 @@ const ChartTooltipContent = React.forwardRef<
       labelClassName,
       config,
       labelKey,
+      nameKey,
     ])
 
     if (!active || !payload?.length) {
@@ -185,22 +230,31 @@ const ChartTooltipContent = React.forwardRef<
       >
         {!nestLabel ? tooltipLabel : null}
         <div className="grid gap-1.5">
-          {payload.map((item, index) => {
-            const key = `${nameKey || item.name || item.dataKey || "value"}`
+          {payload.map((rawItem, index) => {
+              const item = isRecord(rawItem) ? (rawItem as ChartPayloadItem) : ({} as ChartPayloadItem)
+              const key = `${nameKey ?? (item.name ?? item.dataKey ?? "value")}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            const indicatorColor = color || item.payload.fill || item.color
+              const indicatorColor = color ?? (isRecord(item.payload) ? item.payload.fill : undefined) ?? item.color
+
+        let formattedEl: React.ReactNode | null = null
+            if (typeof formatter === "function" && item?.value !== undefined && item.name) {
+              try {
+                const anyFormatter = formatter as unknown as (...args: any[]) => any
+                formattedEl = anyFormatter(item.value, item.name, item as any, index, item.payload) as React.ReactNode
+              } catch {
+                formattedEl = null
+              }
+            }
 
             return (
               <div
-                key={item.dataKey}
+                key={String(item.dataKey ?? index)}
                 className={cn(
                   "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-zinc-500 dark:[&>svg]:text-zinc-400",
                   indicator === "dot" && "items-center"
                 )}
               >
-                {formatter && item?.value !== undefined && item.name ? (
-                  formatter(item.value, item.name, item, index, item.payload)
-                ) : (
+                {formattedEl ?? (
                   <>
                     {itemConfig?.icon ? (
                       <itemConfig.icon />
@@ -217,12 +271,10 @@ const ChartTooltipContent = React.forwardRef<
                               "my-0.5": nestLabel && indicator === "dashed",
                             }
                           )}
-                          style={
-                            {
-                              "--color-bg": indicatorColor,
-                              "--color-border": indicatorColor,
-                            } as React.CSSProperties
-                          }
+                          style={{
+                            "--color-bg": indicatorColor,
+                            "--color-border": indicatorColor,
+                          } as React.CSSProperties}
                         />
                       )
                     )}
@@ -235,12 +287,12 @@ const ChartTooltipContent = React.forwardRef<
                       <div className="grid gap-1.5">
                         {nestLabel ? tooltipLabel : null}
                         <span className="text-zinc-500 dark:text-zinc-400">
-                          {itemConfig?.label || item.name}
+                            {itemConfig?.label ?? item.name}
                         </span>
                       </div>
-                      {item.value && (
+                        {item.value !== undefined && item.value !== null && (
                         <span className="font-mono font-medium tabular-nums text-zinc-950 dark:text-zinc-50">
-                          {item.value.toLocaleString()}
+                          {safeValueToString(item.value)}
                         </span>
                       )}
                     </div>
@@ -285,13 +337,18 @@ const ChartLegendContent = React.forwardRef<
           className
         )}
       >
-        {payload.map((item) => {
-          const key = `${nameKey || item.dataKey || "value"}`
+        {payload.map((rawItem, idx) => {
+          const item = isRecord(rawItem) ? (rawItem as Record<string, unknown>) : ({} as Record<string, unknown>)
+          const key = resolveKeyFromItem(item, nameKey)
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
           return (
             <div
-              key={item.value}
+              key={
+                typeof item.value === "string" || typeof item.value === "number"
+                  ? String(item.value)
+                  : String(idx)
+              }
               className={cn(
                 "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-zinc-500 dark:[&>svg]:text-zinc-400"
               )}
@@ -302,7 +359,7 @@ const ChartLegendContent = React.forwardRef<
                 <div
                   className="h-2 w-2 shrink-0 rounded-[2px]"
                   style={{
-                    backgroundColor: item.color,
+                    backgroundColor: typeof item.color === "string" ? item.color : undefined,
                   }}
                 />
               )}
@@ -317,42 +374,25 @@ const ChartLegendContent = React.forwardRef<
 ChartLegendContent.displayName = "ChartLegend"
 
 // Helper to extract item config from a payload.
-function getPayloadConfigFromPayload(
-  config: ChartConfig,
-  payload: unknown,
-  key: string
-) {
-  if (typeof payload !== "object" || payload === null) {
-    return undefined
+function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key: string) {
+  if (!isRecord(payload)) return undefined
+
+  const payloadRecord = payload
+  const payloadPayload = isRecord(payloadRecord.payload) ? payloadRecord.payload : undefined
+
+  let configLabelKey = key
+
+  const v1 = payloadRecord[key]
+  if (typeof v1 === "string" || typeof v1 === "number") {
+    configLabelKey = String(v1)
+  } else if (payloadPayload) {
+    const v2 = payloadPayload[key]
+    if (typeof v2 === "string" || typeof v2 === "number") {
+      configLabelKey = String(v2)
+    }
   }
 
-  const payloadPayload =
-    "payload" in payload &&
-    typeof payload.payload === "object" &&
-    payload.payload !== null
-      ? payload.payload
-      : undefined
-
-  let configLabelKey: string = key
-
-  if (
-    key in payload &&
-    typeof payload[key as keyof typeof payload] === "string"
-  ) {
-    configLabelKey = payload[key as keyof typeof payload] as string
-  } else if (
-    payloadPayload &&
-    key in payloadPayload &&
-    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
-  ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ] as string
-  }
-
-  return configLabelKey in config
-    ? config[configLabelKey]
-    : config[key as keyof typeof config]
+  return configLabelKey in config ? config[configLabelKey] : config[key]
 }
 
 export {

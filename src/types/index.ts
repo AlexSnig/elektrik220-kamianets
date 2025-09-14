@@ -30,11 +30,11 @@ export interface Company {
 }
 
 export interface Contact {
-  phones: Array<{
+  phones: {
     number: string;
     type: string;
     primary: boolean;
-  }>;
+  }[];
   email: string;
   address: {
     street: string;

@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Facebook, Instagram } from 'lucide-react';
-import { useApp } from '../contexts/AppContext';
+import { useApp } from '../hooks/use-app';
 import { QuoteRequest } from '../types';
 
 const ContactSection: React.FC = () => {
@@ -18,7 +17,6 @@ const ContactSection: React.FC = () => {
     preferred_time: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -26,72 +24,14 @@ const ContactSection: React.FC = () => {
 
   const companyData = state.companyData;
   const contact = companyData?.contact;
-  const primaryPhone = contact?.phones.find(p => p.primary)?.number || '+380 97 123 45 67';
-
-  const mapStyles = [
-    {
-      featureType: 'all',
-      elementType: 'geometry.fill',
-      stylers: [{ weight: '2.00' }]
-    },
-    {
-      featureType: 'all',
-      elementType: 'geometry.stroke',
-      stylers: [{ color: '#9c9c9c' }]
-    },
-    {
-      featureType: 'all',
-      elementType: 'labels.text',
-      stylers: [{ visibility: 'on' }]
-    },
-    {
-      featureType: 'landscape',
-      elementType: 'all',
-      stylers: [{ color: '#f2f2f2' }]
-    },
-    {
-      featureType: 'poi',
-      elementType: 'all',
-      stylers: [{ visibility: 'off' }]
-    },
-    {
-      featureType: 'road',
-      elementType: 'all',
-      stylers: [{ saturation: -100 }, { lightness: 45 }]
-    },
-    {
-      featureType: 'water',
-      elementType: 'all',
-      stylers: [{ color: '#3e82f4' }, { visibility: 'on' }]
-    }
-  ];
-
-  const mapOptions = {
-    styles: mapStyles,
-    disableDefaultUI: false,
-    zoomControl: true,
-    mapTypeControl: false,
-    scaleControl: true,
-    streetViewControl: false,
-    rotateControl: false,
-    fullscreenControl: true,
-  };
-
-  const center = {
-    lat: contact?.address.coordinates.lat || 48.6823,
-    lng: contact?.address.coordinates.lng || 26.5836,
-  };
-
-  const onLoad = useCallback((map: google.maps.Map) => {
-    // Map is ready
-  }, []);
+  const primaryPhone = contact?.phones.find(p => p.primary)?.number ?? '+380 97 123 45 67';
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -112,7 +52,7 @@ const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gray-50">
+    <section id="contact" className="py-12 sm:py-16 md:py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -124,16 +64,16 @@ const ContactSection: React.FC = () => {
         >
           <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <Phone className="w-4 h-4" />
-            <span>Зв'язатися з нами</span>
+            <span>Зв&apos;язатися з нами</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             Контакти та
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
               замовлення послуг
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Готові допомогти вам з будь-якими електричними роботами в Кам'янці-Подільському. Зв'яжіться з нами зручним способом.
+            Готові допомогти вам з будь-якими електричними роботами в Кам&apos;янці-Подільському. Зв&apos;яжіться з нами зручним способом.
           </p>
         </motion.div>
 
@@ -281,29 +221,33 @@ const ContactSection: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Ім'я *
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                      Ім&apos;я *
                     </label>
                     <input
+                      id="name"
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
                       required
+                      autoComplete="name"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Ваше ім'я"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                       Телефон *
                     </label>
                     <input
+                      id="phone"
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
                       required
+                      autoComplete="tel"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="+380 XX XXX XX XX"
                     />
@@ -311,14 +255,16 @@ const ContactSection: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Email
                   </label>
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
+                    autoComplete="email"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="your@email.com"
                   />
@@ -326,10 +272,11 @@ const ContactSection: React.FC = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
                       Послуга *
                     </label>
                     <select
+                      id="service"
                       name="service"
                       value={formData.service}
                       onChange={handleInputChange}
@@ -345,10 +292,11 @@ const ContactSection: React.FC = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="preferred_time" className="block text-sm font-medium text-gray-700 mb-2">
                       Бажаний час
                     </label>
                     <input
+                      id="preferred_time"
                       type="text"
                       name="preferred_time"
                       value={formData.preferred_time}
@@ -360,25 +308,28 @@ const ContactSection: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
                     Адреса *
                   </label>
                   <input
+                    id="address"
                     type="text"
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
                     required
+                    autoComplete="address-line1"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="Адреса виконання робіт"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                     Опис робіт *
                   </label>
                   <textarea
+                    id="description"
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
@@ -404,47 +355,6 @@ const ContactSection: React.FC = () => {
                   )}
                 </button>
               </form>
-            </div>
-
-            {/* Map */}
-            <div className="bg-white rounded-2xl p-4 shadow-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Ми на карті</h3>
-              <div className="h-80 rounded-xl overflow-hidden">
-                <LoadScript googleMapsApiKey="AIzaSyCO0kKndUNlmQi3B5mxy4dblg_8WYcuKuk">
-                  <GoogleMap
-                    mapContainerStyle={{ width: '100%', height: '100%' }}
-                    center={center}
-                    zoom={14}
-                    onLoad={onLoad}
-                    options={mapOptions}
-                  >
-                    <Marker
-                      position={center}
-                      onClick={() => setShowInfoWindow(true)}
-                    >
-                      {showInfoWindow && (
-                        <InfoWindow onCloseClick={() => setShowInfoWindow(false)}>
-                          <div className="p-2">
-                            <h4 className="font-semibold text-gray-900 mb-1">
-                              {companyData?.company.name}
-                            </h4>
-                            <p className="text-gray-600 text-sm mb-2">
-                              {contact?.address.street}<br />
-                              {contact?.address.city}
-                            </p>
-                            <a
-                              href={`tel:${primaryPhone}`}
-                              className="text-blue-600 text-sm font-medium"
-                            >
-                              {primaryPhone}
-                            </a>
-                          </div>
-                        </InfoWindow>
-                      )}
-                    </Marker>
-                  </GoogleMap>
-                </LoadScript>
-              </div>
             </div>
           </motion.div>
         </div>

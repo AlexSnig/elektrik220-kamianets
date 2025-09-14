@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { AppProvider } from './contexts/AppContext';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import ServicesSection from './components/ServicesSection';
 import AboutSection from './components/AboutSection';
 import GallerySection from './components/GallerySection';
-import TestimonialsSection from './components/TestimonialsSection';
-import BlogSection from './components/BlogSection';
+const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'));
+const BlogSection = lazy(() => import('./components/BlogSection'));
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import './App.css';
@@ -33,10 +33,14 @@ function App() {
           <GallerySection />
           
           {/* Testimonials Section */}
-          <TestimonialsSection />
+            <Suspense fallback={<div>Завантаження...</div>}>
+              <TestimonialsSection />
+            </Suspense>
           
           {/* Blog Section */}
-          <BlogSection />
+            <Suspense fallback={<div>Завантаження...</div>}>
+              <BlogSection />
+            </Suspense>
           
           {/* Contact Section */}
           <ContactSection />

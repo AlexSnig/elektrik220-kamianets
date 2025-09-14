@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Zap, Facebook, Instagram, MessageCircle, ArrowUp, Shield, Award } from 'lucide-react';
-import { useApp } from '../contexts/AppContext';
+import { useApp } from '../hooks/use-app';
 
 const Footer: React.FC = () => {
   const { state } = useApp();
   const companyData = state.companyData;
   const contact = companyData?.contact;
-  const primaryPhone = contact?.phones.find(p => p.primary)?.number || '+380 97 123 45 67';
+  const primaryPhone = contact?.phones.find(p => p.primary)?.number ?? '+380 97 123 45 67';
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-1">
@@ -53,9 +53,9 @@ const Footer: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold">
-                  {companyData?.company.name || 'ЕлектроСервіс'}
+                  {companyData?.company.name ?? 'ЕлектроСервіс'}
                 </h3>
-                <p className="text-gray-400 text-sm">Кам'янець-Подільський</p>
+                <p className="text-gray-400 text-sm">Кам&#39;янець-Подільський</p>
               </div>
             </motion.div>
 
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              {companyData?.company.tagline || 
+              {companyData?.company.tagline ?? 
                 'Ваш надійний електрик у Кам\'янці-Подільському. Професійні електричні послуги з гарантією якості.'}
             </motion.p>
 
@@ -80,11 +80,11 @@ const Footer: React.FC = () => {
             >
               <div className="flex items-center space-x-2 text-sm">
                 <Shield className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-300">Гарантія {companyData?.company.guarantee || '5 років'}</span>
+                <span className="text-gray-300">Гарантія {companyData?.company.guarantee ?? '5 років'}</span>
               </div>
               <div className="flex items-center space-x-2 text-sm">
                 <Award className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-300">Досвід {companyData?.company.experience || '10+ років'}</span>
+                <span className="text-gray-300">Досвід {companyData?.company.experience ?? '10+ років'}</span>
               </div>
             </motion.div>
 
@@ -237,8 +237,17 @@ const Footer: React.FC = () => {
               </div>
 
               {/* Address */}
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div className="flex flex-col items-start space-y-3">
+                {/* Ми на картах */}
+                <a
+                  href="https://www.google.com/maps/place/?q=place_id:ChIJKx7hfRfHM0cR9gFI8ZPSvl4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-600 font-medium mb-2"
+                >
+                  <MapPin className="w-5 h-5" />
+                  <span>Ми на картах</span>
+                </a>
                 <div>
                   <p className="text-white">
                     {contact?.address.street}<br />
@@ -248,6 +257,10 @@ const Footer: React.FC = () => {
               </div>
 
               {/* Working Hours */}
+              {/* Testimonials */}
+              <div className="mt-6">
+                {/* Відгуки прибрано */}
+              </div>
               <div className="flex items-start space-x-3">
                 <Clock className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
@@ -284,14 +297,14 @@ const Footer: React.FC = () => {
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between">
-            <motion.p
+              <motion.p
               className="text-gray-400 text-sm text-center md:text-left mb-4 md:mb-0"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              © {currentYear} {companyData?.company.name || 'ЕлектроСервіс Кам\'янець'}. Всі права захищені.
+              © {currentYear} {companyData?.company.name ?? 'ЕлектроСервіс Кам\'янець'}. Всі права захищені.
             </motion.p>
 
             <motion.div
@@ -302,7 +315,7 @@ const Footer: React.FC = () => {
               viewport={{ once: true }}
             >
               <div className="hidden md:flex items-center space-x-4 text-sm text-gray-400">
-                <span>Розроблено з ❤️ для Кам'янця-Подільського</span>
+                <span>Розроблено з ❤️ для Кам&#39;янця-Подільського</span>
               </div>
               
               {/* Scroll to Top Button */}

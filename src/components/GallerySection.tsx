@@ -1,3 +1,6 @@
+// Рекомендація: для кращої типізації увімкніть strictNullChecks у tsconfig.json
+// "strictNullChecks": true
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -96,7 +99,7 @@ const GallerySection: React.FC = () => {
   };
 
   return (
-    <section id="gallery" className="py-20 bg-gray-50">
+    <section id="gallery" className="py-12 sm:py-16 md:py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -110,7 +113,7 @@ const GallerySection: React.FC = () => {
             <Award className="w-4 h-4" />
             <span>Наші роботи</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             Галерея виконаних
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
               проектів
@@ -150,7 +153,7 @@ const GallerySection: React.FC = () => {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             {filteredItems.map((item, index) => (
               <motion.div
                 key={item.id}
@@ -255,7 +258,7 @@ const GallerySection: React.FC = () => {
             Хочете такий же результат?
           </h3>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Зв'яжіться з нами, і ми з радістю втілимо ваш проект в життя з такою ж якістю та увагою до деталей.
+            Зв&apos;яжіться з нами, і ми з радістю втілимо ваш проект в життя з такою ж якістю та увагою до деталей.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

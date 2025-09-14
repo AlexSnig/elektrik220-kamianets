@@ -1,9 +1,36 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Check, ArrowRight, Clock, Shield, Star, Phone } from 'lucide-react';
-import { useApp } from '../contexts/AppContext';
+import { Check, ArrowRight, Clock, Shield, Phone, Users, Award } from 'lucide-react';
+import { useApp } from '../hooks/use-app';
 import { Service } from '../types';
+
+export const StatsBar: React.FC = () => {
+  const { state } = useApp();
+  const stats = [
+    { icon: Users, value: state.companyData?.company?.completed_projects ?? '2000+', label: 'Виконаних проектів' },
+    { icon: Clock, value: state.companyData?.company?.experience ?? '10+', label: 'Років досвіду' },
+    { icon: Shield, value: state.companyData?.company?.guarantee ?? '5', label: 'Років гарантії' },
+    { icon: Award, value: '24/7', label: 'Аварійний виклик' },
+  ];
+  return (
+    <div className="container mx-auto px-4">
+      <div className="hidden lg:flex items-center space-x-8 mb-8">
+        {stats.map((stat, index) => (
+          <div key={index} className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+              <stat.icon className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <div className="text-base font-bold text-gray-900">{stat.value}</div>
+              <div className="text-xs text-gray-600">{stat.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const ServicesSection: React.FC = () => {
   const { state } = useApp();
@@ -13,7 +40,7 @@ const ServicesSection: React.FC = () => {
     threshold: 0.1,
   });
 
-  const phoneNumber = state.companyData?.contact.phones.find(p => p.primary)?.number || '+380 97 123 45 67';
+  const phoneNumber = state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380 97 123 45 67';
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -37,7 +64,9 @@ const ServicesSection: React.FC = () => {
   };
 
   return (
-    <section id="services" className="py-20 bg-gray-50">
+    <>
+      <StatsBar />
+      <section id="services" className="py-12 sm:py-16 md:py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -47,14 +76,10 @@ const ServicesSection: React.FC = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            <Star className="w-4 h-4" />
-            <span>Професійні послуги</span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             Електричні послуги
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
-              в Кам'янці-Подільському
+              в Кам&apos;янці-Подільському
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -74,7 +99,7 @@ const ServicesSection: React.FC = () => {
             <motion.div
               key={service.id}
               variants={cardVariants}
-              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 h-full flex flex-col"
               whileHover={{ y: -5 }}
             >
               {/* Urgent Badge */}
@@ -84,7 +109,7 @@ const ServicesSection: React.FC = () => {
                 </div>
               )}
 
-              <div className="p-6">
+              <div className="p-6 flex flex-col h-full">
                 {/* Icon */}
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <span className="text-3xl">{service.icon}</span>
@@ -94,7 +119,7 @@ const ServicesSection: React.FC = () => {
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-4 line-clamp-3">
+                <p className="text-gray-600 mb-4 line-clamp-3 flex-grow">
                   {service.description}
                 </p>
 
@@ -225,7 +250,7 @@ const ServicesSection: React.FC = () => {
         >
           <h3 className="text-3xl font-bold mb-4">Не знайшли потрібну послугу?</h3>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Зв'яжіться з нами для консультації. Ми вирішуємо будь-які електричні завдання!
+            Зв&apos;яжіться з нами для консультації. Ми вирішуємо будь-які електричні завдання!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -245,6 +270,7 @@ const ServicesSection: React.FC = () => {
         </motion.div>
       </div>
     </section>
+    </>
   );
 };
 

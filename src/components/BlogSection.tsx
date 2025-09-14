@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { BookOpen, Clock, User, Tag, ArrowRight, Lightbulb } from 'lucide-react';
-import { useApp } from '../contexts/AppContext';
+import { useApp } from '../hooks/use-app';
 import { BlogArticle } from '../types';
 
 const BlogSection: React.FC = () => {
@@ -35,7 +35,7 @@ const BlogSection: React.FC = () => {
   };
 
   return (
-    <section id="blog" className="py-20 bg-white">
+    <section id="blog" className="py-12 sm:py-16 md:py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -49,7 +49,7 @@ const BlogSection: React.FC = () => {
             <Lightbulb className="w-4 h-4" />
             <span>Корисні поради</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             Блог про
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
               електрику
@@ -205,7 +205,7 @@ const BlogSection: React.FC = () => {
                       Потрібна допомога електрика?
                     </h3>
                     <p className="text-gray-600 mb-4">
-                      Зв'яжіться з нами для професійної консультації та виконання електричних робіт у Кам'янці-Подільському.
+                      Зв&apos;яжіться з нами для професійної консультації та виконання електричних робіт у Кам&apos;янці-Подільському.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3">
                       <a

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Star, Quote, ChevronLeft, ChevronRight, MapPin, Calendar, Users } from 'lucide-react';
-import { useApp } from '../contexts/AppContext';
+import { useApp } from '../hooks/use-app';
 
 const TestimonialsSection: React.FC = () => {
   const { state } = useApp();
@@ -47,7 +47,7 @@ const TestimonialsSection: React.FC = () => {
   }
 
   return (
-    <section id="testimonials" className="py-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <section id="testimonials" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -61,14 +61,14 @@ const TestimonialsSection: React.FC = () => {
             <Users className="w-4 h-4" />
             <span>Відгуки клієнтів</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             Що кажуть наші
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
               клієнти
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Довіра наших клієнтів - найкраща винагорода за нашу роботу. Читайте реальні відгуки людей з Кам'янця-Подільського.
+            Довіра наших клієнтів - найкраща винагорода за нашу роботу. Читайте реальні відгуки людей з Кам&apos;янця-Подільського.
           </p>
         </motion.div>
 
@@ -129,7 +129,7 @@ const TestimonialsSection: React.FC = () => {
 
                 {/* Testimonial Text */}
                 <blockquote className="text-xl lg:text-2xl text-gray-700 text-center mb-8 font-medium leading-relaxed">
-                  "{testimonials[currentIndex].text}"
+                  &ldquo;{testimonials[currentIndex].text}&rdquo;
                 </blockquote>
 
                 {/* Client Info */}
@@ -207,7 +207,7 @@ const TestimonialsSection: React.FC = () => {
 
               {/* Text */}
               <p className="text-gray-700 mb-4 line-clamp-3">
-                "{testimonial.text}"
+                &ldquo;{testimonial.text}&rdquo;
               </p>
 
               {/* Client Info */}

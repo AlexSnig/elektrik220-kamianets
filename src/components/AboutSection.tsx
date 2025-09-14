@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Award, Shield, Users, Clock, CheckCircle, Zap, Phone } from 'lucide-react';
-import { useApp } from '../contexts/AppContext';
+import { useApp } from '../hooks/use-app';
 
 const AboutSection: React.FC = () => {
   const { state } = useApp();
@@ -12,24 +12,24 @@ const AboutSection: React.FC = () => {
   });
 
   const companyData = state.companyData;
-  const phoneNumber = companyData?.contact.phones.find(p => p.primary)?.number || '+380 97 123 45 67';
+  const phoneNumber = companyData?.contact.phones.find(p => p.primary)?.number ?? '+380 97 123 45 67';
 
   const achievements = [
     {
       icon: Users,
-      value: companyData?.company.completed_projects || '2000+',
+  value: companyData?.company.completed_projects ?? '2000+',
       label: 'Задоволених клієнтів',
       description: 'За час роботи ми допомогли тисячам клієнтів',
     },
     {
       icon: Clock,
-      value: companyData?.company.experience || '10+',
+  value: companyData?.company.experience ?? '10+',
       label: 'Років на ринку',
       description: 'Багаторічний досвід у сфері електромонтажу',
     },
     {
       icon: Shield,
-      value: companyData?.company.guarantee || '5',
+  value: companyData?.company.guarantee ?? '5',
       label: 'Років гарантії',
       description: 'Довгострокова гарантія на всі роботи',
     },
@@ -65,7 +65,7 @@ const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-12 sm:py-16 md:py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
@@ -80,7 +80,7 @@ const AboutSection: React.FC = () => {
               <span>Про нашу команду</span>
             </div>
 
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               Професійні електрики
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
                 з багаторічним досвідом
@@ -88,7 +88,7 @@ const AboutSection: React.FC = () => {
             </h2>
 
             <p className="text-xl text-gray-600 mb-8">
-              {companyData?.company.description || 
+              {companyData?.company.description ?? 
                 'Ми - команда кваліфікованих електриків з багаторічним досвідом роботи в Кам\'янці-Подільському. Спеціалізуємося на всіх видах електромонтажних робіт від дрібного ремонту до повного електромонтажу.'}
             </p>
 
@@ -176,7 +176,7 @@ const AboutSection: React.FC = () => {
                 <img
                   src="/images/tools-background.jpg"
                   alt="Професійні інструменти електрика"
-                  className="w-full h-[400px] object-cover"
+                  className="w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] object-cover"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>

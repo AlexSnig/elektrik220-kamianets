@@ -57,7 +57,7 @@ const AppContext = createContext<{
 } | null>(null);
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(appReducer, initialState);
+  const [state, dispatch] = useReducer<React.Reducer<AppState, AppAction>>(appReducer, initialState);
 
   useEffect(() => {
     const loadData = async () => {
@@ -77,16 +77,25 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         }
 
         const [servicesData, testimonialsData, companyData, blogData] = await Promise.all([
-          servicesRes.json(),
-          testimonialsRes.json(),
-          companyRes.json(),
-          blogRes.json(),
+          servicesRes.json() as Promise<{ services: Service[] }>,
+          testimonialsRes.json() as Promise<{ testimonials: Testimonial[] }>,
+          companyRes.json() as Promise<CompanyData>,
+          blogRes.json() as Promise<{ articles: BlogArticle[] }>,
         ]);
 
-        dispatch({ type: 'SET_SERVICES', payload: servicesData.services });
-        dispatch({ type: 'SET_TESTIMONIALS', payload: testimonialsData.testimonials });
-        dispatch({ type: 'SET_COMPANY_DATA', payload: companyData });
-        dispatch({ type: 'SET_BLOG_ARTICLES', payload: blogData.articles });
+        // Basic runtime validation and dispatch
+        if (servicesData && Array.isArray(servicesData.services)) {
+          dispatch({ type: 'SET_SERVICES', payload: servicesData.services });
+        }
+        if (testimonialsData && Array.isArray(testimonialsData.testimonials)) {
+          dispatch({ type: 'SET_TESTIMONIALS', payload: testimonialsData.testimonials });
+        }
+        if (companyData) {
+          dispatch({ type: 'SET_COMPANY_DATA', payload: companyData });
+        }
+        if (blogData && Array.isArray(blogData.articles)) {
+          dispatch({ type: 'SET_BLOG_ARTICLES', payload: blogData.articles });
+        }
       } catch (error) {
         dispatch({ type: 'SET_ERROR', payload: 'Помилка завантаження даних' });
         console.error('Error loading data:', error);
@@ -95,7 +104,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       }
     };
 
-    loadData();
+    // call and intentionally ignore returned promise (handled inside)
+    void loadData();
   }, []);
 
   return (
