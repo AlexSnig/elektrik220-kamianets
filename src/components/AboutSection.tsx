@@ -183,31 +183,9 @@ const AboutSection: React.FC = () => {
               </motion.div>
 
               {/* Floating Elements */}
-              <motion.div
-                className="absolute -top-6 -left-6 bg-white p-4 rounded-2xl shadow-xl"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 1 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">24/7</div>
-                  <div className="text-sm text-gray-600">Аварійний виклик</div>
-                </div>
-              </motion.div>
+              {/* Елемент 24/7 Аварійний виклик видалено */}
 
-              <motion.div
-                className="absolute -bottom-6 -right-6 bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-2xl shadow-xl"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 1.2 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="text-center">
-                  <div className="text-2xl font-bold">5</div>
-                  <div className="text-sm">років гарантії</div>
-                </div>
-              </motion.div>
+              {/* Елемент 5 років гарантії видалено */}
             </div>
 
             {/* Achievements Grid */}

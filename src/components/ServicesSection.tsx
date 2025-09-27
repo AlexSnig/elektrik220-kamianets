@@ -15,15 +15,15 @@ export const StatsBar: React.FC = () => {
   ];
   return (
     <div className="container mx-auto px-4">
-      <div className="hidden lg:flex items-center space-x-8 mb-8">
+  <div className="hidden lg:flex items-center justify-center gap-12 mx-auto max-w-5xl py-1">
         {stats.map((stat, index) => (
           <div key={index} className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
               <stat.icon className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <div className="text-base font-bold text-gray-900">{stat.value}</div>
-              <div className="text-xs text-gray-600">{stat.label}</div>
+              <div className="text-base font-bold text-gray-900 leading-none whitespace-nowrap">{stat.value}</div>
+              <div className="text-xs text-gray-600 leading-none whitespace-nowrap">{stat.label}</div>
             </div>
           </div>
         ))}
@@ -65,8 +65,13 @@ const ServicesSection: React.FC = () => {
 
   return (
     <>
-      <StatsBar />
-      <section id="services" className="py-12 sm:py-16 md:py-20 bg-gray-50">
+      {/* Inter-section band (desktop only): center stats inside the yellow zone */}
+      <div className="hidden lg:block bg-gray-50">
+        <div className="h-24 flex items-center justify-center">
+          <StatsBar />
+        </div>
+      </div>
+      <section id="services" className="py-12 sm:py-16 md:py-20 lg:pt-0 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div

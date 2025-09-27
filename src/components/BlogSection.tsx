@@ -141,7 +141,13 @@ const BlogSection: React.FC = () => {
 
         {/* Article Modal */}
         {selectedArticle && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={() => setSelectedArticle(null)}>
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" 
+            onClick={() => setSelectedArticle(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+          >
             <motion.div
               className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               initial={{ opacity: 0, scale: 0.9 }}
@@ -165,7 +171,7 @@ const BlogSection: React.FC = () => {
                         {new Date(selectedArticle.date).toLocaleDateString('uk-UA')}
                       </span>
                     </div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">{selectedArticle.title}</h2>
+                    <h2 id="modal-title" className="text-3xl font-bold text-gray-900 mb-4">{selectedArticle.title}</h2>
                     <div className="flex flex-wrap gap-2">
                       {selectedArticle.tags.map((tag, index) => (
                         <span

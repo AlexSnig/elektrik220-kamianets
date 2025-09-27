@@ -140,7 +140,7 @@ const HeroSection: React.FC = () => {
 
             {/* Stats (залишаємо для мобільних) */}
             <motion.div
-              className="grid grid-cols-2 gap-6 lg:hidden"
+              className="grid grid-cols-2 gap-6 justify-items-center lg:hidden"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}

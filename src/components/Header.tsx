@@ -129,13 +129,13 @@ const Header: React.FC = () => {
 
         {/* Trust Indicators Bar */}
         <motion.div
-          className="hidden lg:block bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-blue-100"
+          className="block md:hidden bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-blue-100"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           transition={{ delay: 0.3 }}
         >
             <div className="container mx-auto px-4 py-2">
-              <div className="flex items-center justify-center space-x-8 text-sm text-gray-600">
+              <div className="flex items-center justify-center space-x-8 text-sm text-gray-600 md:hidden lg:hidden">
                 <div className="flex items-center space-x-2">
                   <Shield className="w-4 h-4 text-blue-600" />
                   <span>Гарантія 5 років</span>

@@ -22,10 +22,10 @@
       "street": "Рiчна 11",
       "city": "Кам'янець-Подільський",
       "region": "Хмельницька область",
-      "postal_code": "32300",
+      "postal_code": "32301",
       "coordinates": {
-        "lat": 48.675,
-        "lng": 26.58
+        "lat": 48.672192,
+        "lng": 26.5671073
       }
     },
     "working_hours": {

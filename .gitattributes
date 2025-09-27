@@ -1,0 +1,34 @@
+# Normalize line endings to LF for all text files
+* text=auto eol=lf
+
+# Treat common binary files properly
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+
+# Keep lockfiles and archives as-is
+*.lock binary
+*.zip binary
+*.gz binary
+*.tgz binary
+
+# Ensure shell and script files are LF
+*.sh text eol=lf
+*.bash text eol=lf
+*.ps1 text eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Ensure source files LF (explicit examples)
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.html text eol=lf
