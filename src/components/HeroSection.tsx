@@ -13,31 +13,31 @@ const HeroSection: React.FC = () => {
   const stats = [
     {
       icon: Users,
-  value: companyData?.company?.completed_projects ?? '2000+',
+      value: companyData?.company?.completed_projects ?? '2000+',
       label: 'Виконаних проектів',
     },
     {
       icon: Clock,
-  value: companyData?.company?.experience ?? '10+',
+      value: '15',
       label: 'Років досвіду',
     },
     {
       icon: Shield,
-  value: companyData?.company?.guarantee ?? '5',
+      value: '3',
       label: 'Років гарантії',
     },
     {
       icon: Award,
-      value: '24/7',
-      label: 'Аварійний виклик',
+      value: '30 хв',
+      label: 'Час прибуття',
     },
   ];
 
   const keyFeatures = [
-    'Виїзд протягом 30 хвилин',
-    'Діагностика безкоштовно',
-    'Гарантія на всі роботи',
-    'Сертифіковані майстри',
+    'Приїзд за 30 хвилин',
+    'Гарантія 3 роки',
+    'Цілодобовий виклик 24/7',
+    '15 років досвіду',
   ];
 
   return (
@@ -76,11 +76,11 @@ const HeroSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <span className="block">Ваш надійний</span>
+              <span className="block">Електрик</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
-                електрик
+                Кам&apos;янець-Подільський
               </span>
-              <span className="block">в Кам&apos;янці-Подільському</span>
+              <span className="block text-2xl sm:text-3xl lg:text-4xl">— Виклик 24/7 220В</span>
             </motion.h1>
 
             {/* Description */}
@@ -90,8 +90,8 @@ const HeroSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              {companyData?.company?.description ??
-                'Професійні електричні послуги з гарантією якості. Понад 10 років досвіду роботи в галузі електромонтажу.'}
+              Зникло світло? Вибиває автомат? Приїду за 35 хвилин цілодобово. 
+              Електромонтаж, заміна проводки, заземлення. Чек, гарантія 3 роки, 15 років досвіду.
             </motion.p>
 
             {/* Key Features */}

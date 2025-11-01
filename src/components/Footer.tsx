@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold">
-                  {companyData?.company.name ?? 'ЕлектроСервіс'}
+                  {companyData?.company.name ?? 'Електрик 220В'}
                 </h3>
                 <p className="text-gray-400 text-sm">Кам&#39;янець-Подільський</p>
               </div>
@@ -304,7 +304,7 @@ const Footer: React.FC = () => {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              © {currentYear} {companyData?.company.name ?? 'ЕлектроСервіс Кам\'янець'}. Всі права захищені.
+              © {currentYear} {companyData?.company.name ?? 'Електрик 220В'}. Всі права захищені.
             </motion.p>
 
             <motion.div

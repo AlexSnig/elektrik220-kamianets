@@ -1,1 +1,72 @@
 keep assets in the dir to use.
+
+# robots.txt content - create separate file:
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://elektrik220.km.ua/sitemap.xml
+
+# Allow search engines to crawl all content
+Allow: /data/
+Allow: /images/
+
+# Block admin or private areas if any
+Disallow: /admin/
+Disallow: /private/
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# sitemap.xml content - create separate file:
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://elektrik220.km.ua/</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://elektrik220.km.ua/#services</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://elektrik220.km.ua/#about</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://elektrik220.km.ua/#gallery</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://elektrik220.km.ua/#testimonials</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://elektrik220.km.ua/#blog</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://elektrik220.km.ua/#faq</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://elektrik220.km.ua/#contact</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>

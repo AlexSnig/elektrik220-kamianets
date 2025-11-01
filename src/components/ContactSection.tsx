@@ -24,7 +24,27 @@ const ContactSection: React.FC = () => {
 
   const companyData = state.companyData;
   const contact = companyData?.contact;
-  const primaryPhone = contact?.phones.find(p => p.primary)?.number ?? '+380 97 123 45 67';
+  const primaryPhone = contact?.phones.find(p => p.primary)?.number ?? '067-752-31-03';
+
+  // Google Maps configuration
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyDummyKey' // Замініть на реальний API ключ
+  });
+
+  const mapCenter = {
+    lat: contact?.address?.coordinates?.lat ?? 48.672192,
+    lng: contact?.address?.coordinates?.lng ?? 26.5671073
+  };
+
+  const mapOptions = {
+    zoomControl: true,
+    streetViewControl: true,
+    mapTypeControl: false,
+    fullscreenControl: false,
+  };
+
+  const fullAddress = `${contact?.address?.street ?? 'Рiчна 11'}, ${contact?.address?.city ?? 'Кам\'янець-Подільський'}, ${contact?.address?.region ?? 'Хмельницька область'}, ${contact?.address?.postal_code ?? '32301'}`;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -73,7 +93,7 @@ const ContactSection: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Готові допомогти вам з будь-якими електричними роботами в Кам&apos;янці-Подільському. Зв&apos;яжіться з нами зручним способом.
+            {t('contact.description')}
           </p>
         </motion.div>
 
@@ -131,7 +151,7 @@ const ContactSection: React.FC = () => {
                     <MapPin className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900">Адреса</div>
+                    <div className="font-semibold text-gray-900">{t('contact.address')}</div>
                     <div className="text-gray-600">
                       {contact?.address.street}<br />
                       {contact?.address.city}, {contact?.address.region}<br />
@@ -358,6 +378,61 @@ const ContactSection: React.FC = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Google Map */}
+        <motion.div
+          className="mt-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+              <h3 className="text-xl font-bold mb-2">Наше розташування</h3>
+              <p className="text-blue-100">{fullAddress}</p>
+            </div>
+            <div className="h-96">
+              {isLoaded ? (
+                <GoogleMap
+                  mapContainerStyle={{ width: '100%', height: '100%' }}
+                  center={mapCenter}
+                  zoom={16}
+                  options={mapOptions}
+                >
+                  <Marker
+                    position={mapCenter}
+                    title="Електрик 220В - Кам'янець-Подільський"
+                  />
+                </GoogleMap>
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                  <div className="text-center">
+                    <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-gray-600">Завантаження карти...</p>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="p-6 bg-gray-50 border-t">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors text-center"
+                >
+                  Відкрити в Google Maps
+                </a>
+                <a
+                  href={`tel:${primaryPhone}`}
+                  className="flex-1 bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors text-center"
+                >
+                  Зателефонувати: {primaryPhone}
+                </a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

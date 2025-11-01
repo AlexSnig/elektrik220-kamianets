@@ -1,54 +1,62 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# Електрик 220В - Кам'янець-Подільський
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Сучасний веб-сайт для електромонтажних послуг у Кам'янці-Подільському.
 
-Currently, two official plugins are available:
+## 🚀 Технології
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 18** - сучасна бібліотека для створення інтерфейсів
+- **TypeScript** - типізація для надійного коду
+- **Vite** - швидкий збірник
+- **Tailwind CSS** - utility-first CSS фреймворк
+- **React Router** - маршрутизація
+- **Framer Motion** - анімації
+- **shadcn/ui** - компоненти UI
 
-## Expanding the ESLint configuration
+## 📦 Встановлення
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```bash
+# Клонувати репозиторій
+git clone [repository-url]
 
-- Configure the top-level `parserOptions` property like this:
+# Перейти в директорію
+cd elektrician-kamianets
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# Встановити залежності
+npm install
+
+# Запустити dev сервер
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🏗️ Команди
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```bash
+# Розробка
+npm run dev
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+# Білд для продакшну
+npm run build
+
+# Перегляд білду
+npm run preview
+
+# Лінтинг
+npm run lint
+
+# Перевірка типів
+npm run typecheck
 ```
-=======
-# Elektrik220miniMax
->>>>>>> 1119553084ff8856f4e895d6ff5fb722fb3f6726
+
+## 🌐 Деплой на Vercel
+
+Проєкт готовий для деплою на Vercel. Просто під'єднайте репозиторій до Vercel, і він автоматично визначить налаштування.
+
+## 📱 Контакти
+
+- **Телефон**: +380677523103
+- **Адреса**: Річна 11, Кам'янець-Подільський
+- **Сайт**: https://elektrik220.km.ua
+
+## 📄 Ліцензія
+
+© 2024 Електрик 220В. Всі права захищені.

@@ -61,7 +61,7 @@ const Header: React.FC = () => {
               </div>
               <div>
                 <h1 className="text-lg lg:text-xl font-bold text-gray-900">
-                  ЕлектроСервіс
+                  {state.companyData?.company.name ?? 'Електрик 220В'}
                 </h1>
                 <p className="text-xs lg:text-sm text-gray-600 leading-none">
                   Кам&#39;янець-Подільський
@@ -186,7 +186,7 @@ const Header: React.FC = () => {
                       <Zap className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900">ЕлектроСервіс</h2>
+                      <h2 className="text-lg font-bold text-gray-900">{state.companyData?.company.name ?? 'Електрик 220В'}</h2>
                       <p className="text-sm text-gray-600">Кам&#39;янець-Подільський</p>
                     </div>
                   </div>

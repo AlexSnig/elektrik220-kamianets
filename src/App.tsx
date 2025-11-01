@@ -7,6 +7,7 @@ const AboutSection = lazy(() => import('./components/AboutSection'));
 const GallerySection = lazy(() => import('./components/GallerySection'));
 const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'));
 const BlogSection = lazy(() => import('./components/BlogSection'));
+const FAQSection = lazy(() => import('./components/FAQSection'));
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import './App.css';
@@ -53,6 +54,9 @@ function AppInner() {
         </Suspense>
         <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження блогу...</div>}>
           <BlogSection />
+        </Suspense>
+        <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження FAQ...</div>}>
+          <FAQSection />
         </Suspense>
         <ContactSection />
       </main>
