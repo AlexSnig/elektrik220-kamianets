@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Facebook, Instagram } from 'lucide-react';
+import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import { useApp } from '../hooks/use-app';
 import { QuoteRequest } from '../types';
 
