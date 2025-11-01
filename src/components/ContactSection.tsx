@@ -29,11 +29,13 @@ const ContactSection: React.FC = () => {
 
   // Google Maps configuration
   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
-  const { isLoaded, loadError } = useJsApiLoader({
+  const mapsLoaderResult = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: googleMapsApiKey || 'dummy-key',
     libraries: googleMapsApiKey ? ['places'] : []
   });
+  const isLoaded = mapsLoaderResult?.isLoaded ?? false;
+  const loadError = mapsLoaderResult?.loadError ?? null;
 
   const mapCenter = {
     lat: contact?.address?.coordinates?.lat ?? 48.672192,
@@ -50,7 +52,9 @@ const ContactSection: React.FC = () => {
   const fullAddress = `${contact?.address?.street ?? 'Рiчна 11'}, ${contact?.address?.city ?? 'Кам\'янець-Подільський'}, ${contact?.address?.region ?? 'Хмельницька область'}, ${contact?.address?.postal_code ?? '32301'}`;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 

@@ -10,7 +10,22 @@ export default defineConfig({
     },
   },
   build: {
-    minify: 'esbuild',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        passes: 1,
+        unsafe: false,
+        unsafe_comps: false,
+        unsafe_math: false,
+        unsafe_proto: false,
+        unsafe_regexp: false,
+        unsafe_undefined: false,
+      },
+      mangle: false,
+      format: {
+        comments: false,
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: {
