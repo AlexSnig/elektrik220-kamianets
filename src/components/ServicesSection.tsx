@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Check, ArrowRight, Clock, Shield, Phone, Users, Award } from 'lucide-react';
-import { useApp, useLanguage } from '../contexts/AppContext';
+import { useApp } from '../contexts/AppContext';
 import { Service } from '../types';
 
 export const StatsBar: React.FC = () => {
