@@ -100,7 +100,7 @@ const ContactSection: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {t('contact.description')}
+            Зв'яжіться з нами для отримання професійної консультації та замовлення послуг електрика
           </p>
         </motion.div>
 
@@ -156,11 +156,11 @@ const ContactSection: React.FC = () => {
                     <MapPin className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900">{t('contact.address')}</div>
+                    <div className="font-semibold text-gray-900">Адреса</div>
                     <div className="text-gray-600">
-                      {contact?.address.street}<br />
-                      {contact?.address.city}, {contact?.address.region}<br />
-                      {contact?.address.postal_code}
+                      {contact?.address?.street ?? 'Рiчна 11'}<br />
+                      {contact?.address?.city ?? 'Кам\'янець-Подільський'}, {contact?.address?.region ?? 'Хмельницька область'}<br />
+                      {contact?.address?.postal_code ?? '32301'}
                     </div>
                   </div>
                 </div>
