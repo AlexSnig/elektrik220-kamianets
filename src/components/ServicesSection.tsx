@@ -40,7 +40,7 @@ const ServicesSection: React.FC = () => {
     threshold: 0.1,
   });
 
-  const phoneNumber = state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380 97 123 45 67';
+  const phoneNumber = state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
 
   const containerVariants = {
     hidden: { opacity: 0 },

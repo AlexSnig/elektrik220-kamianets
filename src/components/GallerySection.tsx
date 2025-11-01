@@ -262,7 +262,7 @@ const GallerySection: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+380971234567"
+              href="tel:+380677523103"
               className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-200"
             >
               Замовити консультацію

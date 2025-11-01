@@ -25,7 +25,7 @@ const ContactSection: React.FC = () => {
 
   const companyData = state.companyData;
   const contact = companyData?.contact;
-  const primaryPhone = contact?.phones?.find(p => p.primary)?.number ?? '067-752-31-03';
+  const primaryPhone = contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
 
   // Google Maps configuration
   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';

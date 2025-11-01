@@ -215,7 +215,7 @@ const BlogSection: React.FC = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3">
                       <a
-                        href="tel:+380971234567"
+                        href="tel:+380677523103"
                         className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors text-center"
                       >
                         Викликати електрика
@@ -255,7 +255,7 @@ const BlogSection: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+380971234567"
+              href="tel:+380677523103"
               className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-200"
             >
               Безкоштовна консультація

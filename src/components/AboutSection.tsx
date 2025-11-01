@@ -12,7 +12,7 @@ const AboutSection: React.FC = () => {
   });
 
   const companyData = state.companyData;
-  const phoneNumber = companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380 97 123 45 67';
+  const phoneNumber = companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
 
   const achievements = [
     {
