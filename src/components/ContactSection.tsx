@@ -437,7 +437,7 @@ const ContactSection: React.FC = () => {
             <div className="p-6 bg-gray-50 border-t">
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`}
+                  href="https://www.google.com/maps/place/?q=place_id:ChIJKx7hfRfHM0cR9gFI8ZPSvl4"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors text-center"
