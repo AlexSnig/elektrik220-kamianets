@@ -28,9 +28,11 @@ const ContactSection: React.FC = () => {
   const primaryPhone = contact?.phones.find(p => p.primary)?.number ?? '067-752-31-03';
 
   // Google Maps configuration
-  const { isLoaded } = useJsApiLoader({
+  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
+  const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyDummyKey' // Замініть на реальний API ключ
+    googleMapsApiKey: googleMapsApiKey || 'dummy-key',
+    libraries: googleMapsApiKey ? ['places'] : []
   });
 
   const mapCenter = {
@@ -393,7 +395,7 @@ const ContactSection: React.FC = () => {
               <p className="text-blue-100">{fullAddress}</p>
             </div>
             <div className="h-96">
-              {isLoaded ? (
+              {googleMapsApiKey && isLoaded && !loadError ? (
                 <GoogleMap
                   mapContainerStyle={{ width: '100%', height: '100%' }}
                   center={mapCenter}
@@ -408,8 +410,24 @@ const ContactSection: React.FC = () => {
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-100">
                   <div className="text-center">
-                    <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-gray-600">Завантаження карти...</p>
+                    {loadError ? (
+                      <>
+                        <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-600 mb-2">Помилка завантаження карти</p>
+                        <p className="text-sm text-gray-500">Перевірте API ключ</p>
+                      </>
+                    ) : googleMapsApiKey ? (
+                      <>
+                        <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-gray-600">Завантаження карти...</p>
+                      </>
+                    ) : (
+                      <>
+                        <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-600 mb-2">Карта недоступна</p>
+                        <p className="text-sm text-gray-500">API ключ не налаштовано</p>
+                      </>
+                    )}
                   </div>
                 </div>
               )}
