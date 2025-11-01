@@ -12,7 +12,7 @@ const AboutSection: React.FC = () => {
   });
 
   const companyData = state.companyData;
-  const phoneNumber = companyData?.contact.phones.find(p => p.primary)?.number ?? '+380 97 123 45 67';
+  const phoneNumber = companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380 97 123 45 67';
 
   const achievements = [
     {
@@ -126,7 +126,7 @@ const AboutSection: React.FC = () => {
                   Наші сертифікати та допуски:
                 </h3>
                 <div className="space-y-2">
-                  {companyData.certificates.map((cert, index) => (
+                  {(companyData?.certificates || []).map((cert, index) => (
                     <div key={index} className="flex items-center space-x-3">
                       <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
                       <span className="text-gray-700">{cert}</span>

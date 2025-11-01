@@ -100,7 +100,7 @@ const ServicesSection: React.FC = () => {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          {state.services.map((service, index) => (
+          {(state.services || []).map((service, index) => (
             <motion.div
               key={service.id}
               variants={cardVariants}

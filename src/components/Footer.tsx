@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   const { state } = useApp();
   const companyData = state.companyData;
   const contact = companyData?.contact;
-  const primaryPhone = contact?.phones.find(p => p.primary)?.number ?? '+380 97 123 45 67';
+  const primaryPhone = contact?.phones?.find(p => p.primary)?.number ?? '+380 97 123 45 67';
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
     { label: 'Контакти', href: '#contact' },
   ];
 
-  const services = state.services.slice(0, 6);
+  const services = (state.services || []).slice(0, 6);
 
   return (
     <footer className="bg-gray-900 text-white">

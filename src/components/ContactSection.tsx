@@ -25,7 +25,7 @@ const ContactSection: React.FC = () => {
 
   const companyData = state.companyData;
   const contact = companyData?.contact;
-  const primaryPhone = contact?.phones.find(p => p.primary)?.number ?? '067-752-31-03';
+  const primaryPhone = contact?.phones?.find(p => p.primary)?.number ?? '067-752-31-03';
 
   // Google Maps configuration
   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
@@ -124,22 +124,20 @@ const ContactSection: React.FC = () => {
                     <div className="text-blue-100 text-sm">Цілодобово для аварійних викликів</div>
                   </div>
                 </a>
-                {contact?.phones.map((phone, index) => (
-                  !phone.primary && (
-                    <a
-                      key={index}
-                      href={`tel:${phone.number}`}
-                      className="flex items-center space-x-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 hover:bg-white/20 transition-all duration-200"
-                    >
-                      <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
-                        <MessageCircle className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <div className="font-semibold">{phone.number}</div>
-                        <div className="text-blue-100 text-sm">{phone.type}</div>
-                      </div>
-                    </a>
-                  )
+                {(contact?.phones?.filter(phone => !phone.primary) || []).map((phone, index) => (
+                  <a
+                    key={index}
+                    href={`tel:${phone.number}`}
+                    className="flex items-center space-x-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 hover:bg-white/20 transition-all duration-200"
+                  >
+                    <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                      <MessageCircle className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="font-semibold">{phone.number}</div>
+                      <div className="text-blue-100 text-sm">{phone.type}</div>
+                    </div>
+                  </a>
                 ))}
               </div>
             </div>
@@ -307,7 +305,7 @@ const ContactSection: React.FC = () => {
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     >
                       <option value="">Оберіть послугу</option>
-                      {state.services.map((service) => (
+                      {(state.services || []).map((service) => (
                         <option key={service.id} value={service.title}>
                           {service.title}
                         </option>
