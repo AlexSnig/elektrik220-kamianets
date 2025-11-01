@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Clock, Shield, Star, ChevronRight, Zap, Users, Award } from 'lucide-react';
 import { useApp } from '../hooks/use-app';
 
 const HeroSection: React.FC = () => {
   const { state } = useApp();
-  const [showQuoteForm, setShowQuoteForm] = useState(false);
 
   const companyData = state.companyData;
   const phoneNumber = companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
+
+  const handleScrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const stats = [
     {
@@ -128,7 +134,7 @@ const HeroSection: React.FC = () => {
               </motion.a>
 
               <motion.button
-                onClick={() => setShowQuoteForm(true)}
+                onClick={handleScrollToContact}
                 className="group border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

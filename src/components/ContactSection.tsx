@@ -18,6 +18,8 @@ const ContactSection: React.FC = () => {
     preferred_time: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState('');
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -58,13 +60,80 @@ const ContactSection: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
+
+    // Honeypot check - if filled, it's a bot
+    if (honeypot) {
+      console.log('Bot detected');
+      return;
+    }
+
+    // Client-side validation
+    if (!formData.name.trim() || formData.name.length < 2) {
+      setSubmitError('Будь ласка, введіть коректне ім\'я (мінімум 2 символи)');
+      return;
+    }
+
+    if (!formData.phone.trim() || !/^[\d+\s\-()]{10,}$/.test(formData.phone)) {
+      setSubmitError('Будь ласка, введіть коректний номер телефону');
+      return;
+    }
+
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setSubmitError('Будь ласка, введіть коректний email');
+      return;
+    }
+
+    if (!formData.service) {
+      setSubmitError('Будь ласка, оберіть послугу');
+      return;
+    }
+
+    if (!formData.description.trim() || formData.description.length < 10) {
+      setSubmitError('Будь ласка, детально опишіть роботи (мінімум 10 символів)');
+      return;
+    }
+
+    if (!formData.address.trim()) {
+      setSubmitError('Будь ласка, вкажіть адресу');
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Submit to FormSubmit.co (free email forwarding service)
+      // Replace 'info@elektrik220.km.ua' with your actual email
+      const response = await fetch('https://formsubmit.co/ajax/info@elektrik220.km.ua', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email || 'не вказано',
+          service: formData.service,
+          description: formData.description,
+          address: formData.address,
+          preferred_time: formData.preferred_time || 'не вказано',
+          _subject: `Нова заявка від ${formData.name}`,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Помилка відправки форми');
+      }
+
+      // Success
       alert('Дякуємо за заявку! Ми зв\'яжемося з вами найближчим часом.');
+
+      // Reset form
       setFormData({
         name: '',
         phone: '',
@@ -74,8 +143,12 @@ const ContactSection: React.FC = () => {
         address: '',
         preferred_time: '',
       });
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitError('Виникла помилка при відправці. Будь ласка, зателефонуйте нам: ' + primaryPhone);
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -364,6 +437,25 @@ const ContactSection: React.FC = () => {
                     placeholder="Детально опишіть що потрібно зробити..."
                   />
                 </div>
+
+                {/* Honeypot field - hidden from users, visible to bots */}
+                <div className="hidden" aria-hidden="true">
+                  <input
+                    type="text"
+                    name="honeypot"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
+                {/* Error message */}
+                {submitError && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                    {submitError}
+                  </div>
+                )}
 
                 <button
                   type="submit"
