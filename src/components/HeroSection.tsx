@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Clock, Shield, Star, ChevronRight, Zap, Users, Award } from 'lucide-react';
+import { Player } from '@lottiefiles/react-lottie-player';
 import { useApp } from '../hooks/use-app';
 import { smoothTransition } from '../utils/performance';
 
@@ -170,7 +171,7 @@ const HeroSection: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* Hero Image */}
+          {/* Hero Animation */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: 50 }}
@@ -178,19 +179,28 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="relative">
-              {/* Main Image */}
+              {/* Lottie Animation */}
               <motion.div
-                className="relative z-10 rounded-2xl overflow-hidden shadow-2xl"
+                className="relative z-10 rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <img
-                  src="/images/hero-electrician.jpg"
-                  alt="Професійний електрик за роботою"
-                  className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover"
-                  loading="lazy"
+                <Player
+                  autoplay
+                  loop
+                  src="https://lottie.host/d4066482-63d9-4a6f-85df-9ac66a0a45b2/f29jPV6mDL.json"
+                  style={{
+                    height: '300px',
+                    width: '100%',
+                  }}
+                  className="sm:h-[400px] md:h-[500px] lg:h-[600px]"
+                  rendererSettings={{
+                    preserveAspectRatio: 'xMidYMid slice',
+                    progressiveLoad: true,
+                  }}
+                  speed={1}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-600/10 to-transparent pointer-events-none"></div>
               </motion.div>
             </div>
           </motion.div>
