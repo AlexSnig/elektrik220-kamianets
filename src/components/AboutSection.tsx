@@ -81,9 +81,9 @@ const AboutSection: React.FC = () => {
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Професійні електрики
+              Професійний електрик
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
-                з багаторічним досвідом
+                з 15-річним досвідом
               </span>
             </h2>
 
