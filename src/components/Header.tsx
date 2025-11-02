@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Menu, X, Zap, Clock, Shield } from 'lucide-react';
+import { Phone, Menu, X, Zap, Clock } from 'lucide-react';
 import { useApp } from '../hooks/use-app';
 import { throttle, smoothTransition } from '../utils/performance';
 
@@ -142,31 +142,6 @@ const Header: React.FC = () => {
             </motion.button>
           </div>
         </div>
-
-        {/* Trust Indicators Bar */}
-        <motion.div
-          className="block md:hidden bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-blue-100"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          transition={{ delay: 0.3 }}
-        >
-            <div className="container mx-auto px-4 py-2">
-              <div className="flex items-center justify-center space-x-8 text-sm text-gray-600 md:hidden lg:hidden">
-                <div className="flex items-center space-x-2">
-                  <Shield className="w-4 h-4 text-blue-600" />
-                  <span>Гарантія 5 років</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Clock className="w-4 h-4 text-blue-600" />
-                  <span>Виїзд за 30 хвилин</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Zap className="w-4 h-4 text-blue-600" />
-                  <span>10+ років досвіду</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
       </motion.header>
 
       {/* Mobile Menu */}
