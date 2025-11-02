@@ -19,9 +19,9 @@ const HeroSection: React.FC = () => {
     }
   };
 
-  // Load Lottie animation
+  // Load Lottie animation from local file
   useEffect(() => {
-    fetch('https://lottie.host/d4066482-63d9-4a6f-85df-9ac66a0a45b2/f29jPV6mDL.json')
+    fetch('/animations/electrician.json')
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error('Failed to load animation:', error));
