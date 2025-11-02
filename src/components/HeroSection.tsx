@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Clock, Shield, Star, ChevronRight, Zap, Users, Award } from 'lucide-react';
-import Lottie from 'react-lottie';
+import { Phone, Clock, Shield, ChevronRight, Zap, Users, Award } from 'lucide-react';
 import { useApp } from '../hooks/use-app';
-import { smoothTransition } from '../utils/performance';
 
 const HeroSection: React.FC = () => {
   const { state } = useApp();
-  const [animationData, setAnimationData] = useState<any>(null);
 
   const companyData = state.companyData;
   const phoneNumber = companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
@@ -16,23 +13,6 @@ const HeroSection: React.FC = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  // Load Lottie animation from local file
-  useEffect(() => {
-    fetch('/animations/electrician.json')
-      .then(response => response.json())
-      .then(data => setAnimationData(data))
-      .catch(error => console.error('Failed to load animation:', error));
-  }, []);
-
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
     }
   };
 
@@ -69,18 +49,18 @@ const HeroSection: React.FC = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center bg-white">
 
-      <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-0 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-24 relative z-10">
+        <div className="max-w-4xl mx-auto">
           {/* Content */}
           <motion.div
-            className="text-center lg:text-left"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            className="text-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-6 md:hidden"
+              className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -109,24 +89,24 @@ const HeroSection: React.FC = () => {
 
             {/* Description */}
             <motion.p
-              className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0"
+              className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              Зникло світло? Вибиває автомат? Приїду за 35 хвилин цілодобово. 
+              Зникло світло? Вибиває автомат? Приїду за 35 хвилин цілодобово.
               Електромонтаж, заміна проводки, заземлення. Чек, гарантія 3 роки, 15 років досвіду.
             </motion.p>
 
             {/* Key Features */}
             <motion.div
-              className="grid grid-cols-2 gap-4 mb-8"
+              className="grid grid-cols-2 gap-4 mb-8 max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
               {keyFeatures.map((feature, index) => (
-                <div key={index} className="flex items-center space-x-2">
+                <div key={index} className="flex items-center space-x-2 justify-center">
                   <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                   <span className="text-gray-700 text-sm lg:text-base">{feature}</span>
                 </div>
@@ -135,7 +115,7 @@ const HeroSection: React.FC = () => {
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
@@ -162,9 +142,9 @@ const HeroSection: React.FC = () => {
               </motion.button>
             </motion.div>
 
-            {/* Stats (залишаємо для мобільних) */}
+            {/* Stats */}
             <motion.div
-              className="grid grid-cols-2 gap-6 justify-items-center lg:hidden"
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
@@ -176,8 +156,8 @@ const HeroSection: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                 >
                   <div className="flex items-center justify-center mb-2">
-                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
-                      <stat.icon className="w-5 h-5 text-blue-600" />
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <stat.icon className="w-6 h-6 text-blue-600" />
                     </div>
                   </div>
                   <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
@@ -185,38 +165,6 @@ const HeroSection: React.FC = () => {
                 </motion.div>
               ))}
             </motion.div>
-          </motion.div>
-
-          {/* Hero Animation */}
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="relative">
-              {/* Lottie Animation */}
-              <motion.div
-                className="relative z-10 rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center">
-                  {animationData ? (
-                    <Lottie
-                      options={defaultOptions}
-                      height="100%"
-                      width="100%"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center w-full h-full">
-                      <Zap className="w-32 h-32 text-blue-600 animate-pulse" />
-                    </div>
-                  )}
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-600/10 to-transparent pointer-events-none"></div>
-              </motion.div>
-            </div>
           </motion.div>
         </div>
       </div>
