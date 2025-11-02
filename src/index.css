@@ -2,8 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance & Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   font-family: 'Roboto', Arial, Verdana, sans-serif;
+}
+
+/* Hardware acceleration for animations */
+@layer utilities {
+  .hardware-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  .smooth-transition {
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
 }
 
 @layer base {

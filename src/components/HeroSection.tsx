@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Clock, Shield, Star, ChevronRight, Zap, Users, Award } from 'lucide-react';
 import { useApp } from '../hooks/use-app';
+import { smoothTransition } from '../utils/performance';
 
 const HeroSection: React.FC = () => {
   const { state } = useApp();

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Menu, X, Zap, Clock, Shield } from 'lucide-react';
 import { useApp } from '../hooks/use-app';
+import { throttle, smoothTransition } from '../utils/performance';
 
 const Header: React.FC = () => {
   const { state } = useApp();
@@ -9,11 +10,12 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    // Throttled scroll handler for better performance
+    const handleScroll = throttle(() => {
       setIsScrolled(window.scrollY > 50);
-    };
+    }, 100);
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -27,13 +29,20 @@ const Header: React.FC = () => {
     { id: 'contact', label: 'Контакти', href: '#contact' },
   ];
 
-  const scrollToSection = (href: string) => {
+  const scrollToSection = useCallback((href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
       setIsMenuOpen(false);
     }
-  };
+  }, []);
 
   const phoneNumber = state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
 
@@ -47,14 +56,17 @@ const Header: React.FC = () => {
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={smoothTransition}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
             <motion.div
-              className="flex items-center space-x-3"
+              className="flex items-center space-x-3 cursor-pointer"
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              transition={smoothTransition}
+              onClick={() => scrollToSection('#home')}
             >
               <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl shadow-lg">
                 <Zap className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
@@ -75,9 +87,10 @@ const Header: React.FC = () => {
                 <motion.button
                   key={item.id}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
-                  whileHover={{ scale: 1.05 }}
+                  className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 relative"
+                  whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
+                  transition={smoothTransition}
                 >
                   {item.label}
                 </motion.button>
@@ -106,6 +119,7 @@ const Header: React.FC = () => {
                 className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center space-x-2"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
+                transition={smoothTransition}
               >
                 <Phone className="w-4 h-4" />
                 <span>Викликати</span>
@@ -116,7 +130,9 @@ const Header: React.FC = () => {
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              transition={smoothTransition}
             >
               {isMenuOpen ? (
                 <Zap className="w-6 h-6 text-gray-900" />
@@ -174,10 +190,15 @@ const Header: React.FC = () => {
             {/* Menu Panel */}
             <motion.div
               className="absolute top-16 lg:top-20 right-0 w-80 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-white shadow-2xl"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              initial={{ x: '100%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '100%', opacity: 0 }}
+              transition={{
+                type: 'spring',
+                stiffness: 300,
+                damping: 30,
+                mass: 0.8
+              }}
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-8">
