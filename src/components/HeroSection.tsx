@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Clock, Shield, Star, ChevronRight, Zap, Users, Award } from 'lucide-react';
-import { Player } from '@lottiefiles/react-lottie-player';
+import Lottie from 'react-lottie';
 import { useApp } from '../hooks/use-app';
 import { smoothTransition } from '../utils/performance';
 
 const HeroSection: React.FC = () => {
   const { state } = useApp();
+  const [animationData, setAnimationData] = useState<any>(null);
 
   const companyData = state.companyData;
   const phoneNumber = companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
@@ -15,6 +16,23 @@ const HeroSection: React.FC = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Load Lottie animation
+  useEffect(() => {
+    fetch('https://lottie.host/d4066482-63d9-4a6f-85df-9ac66a0a45b2/f29jPV6mDL.json')
+      .then(response => response.json())
+      .then(data => setAnimationData(data))
+      .catch(error => console.error('Failed to load animation:', error));
+  }, []);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
     }
   };
 
@@ -181,25 +199,23 @@ const HeroSection: React.FC = () => {
             <div className="relative">
               {/* Lottie Animation */}
               <motion.div
-                className="relative z-10 rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50"
+                className="relative z-10 rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <Player
-                  autoplay
-                  loop
-                  src="https://lottie.host/d4066482-63d9-4a6f-85df-9ac66a0a45b2/f29jPV6mDL.json"
-                  style={{
-                    height: '300px',
-                    width: '100%',
-                  }}
-                  className="sm:h-[400px] md:h-[500px] lg:h-[600px]"
-                  rendererSettings={{
-                    preserveAspectRatio: 'xMidYMid slice',
-                    progressiveLoad: true,
-                  }}
-                  speed={1}
-                />
+                <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center">
+                  {animationData ? (
+                    <Lottie
+                      options={defaultOptions}
+                      height="100%"
+                      width="100%"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center w-full h-full">
+                      <Zap className="w-32 h-32 text-blue-600 animate-pulse" />
+                    </div>
+                  )}
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-600/10 to-transparent pointer-events-none"></div>
               </motion.div>
             </div>
