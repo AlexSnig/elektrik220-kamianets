@@ -92,10 +92,17 @@ const HeroSection: React.FC = () => {
             {/* Main Heading */}
             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               <span className="block animate-fade-scale">Електрик</span>
-              <span className="block animate-gradient-text animate-title-glow" style={{ animationDelay: '0.2s' }}>
+              <span
+                className="block bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 bg-[length:200%_auto] animate-gradient-shift bg-clip-text text-transparent drop-shadow-lg"
+                style={{
+                  animationDelay: '0.2s',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}
+              >
                 Кам&apos;янець-Подільський
               </span>
-              <span className="block text-2xl sm:text-3xl lg:text-4xl text-gray-800 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+              <span className="block text-2xl sm:text-3xl lg:text-4xl text-gray-800 animate-fade-up [animation-delay:0.4s]">
                 — Виклик 24/7 220В
               </span>
             </h1>

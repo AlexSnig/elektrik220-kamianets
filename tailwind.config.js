@@ -158,6 +158,34 @@ module.exports = {
 						opacity: '1',
 					},
 				},
+				'gradient-shift': {
+					'0%, 100%': {
+						backgroundPosition: '0% center',
+					},
+					'50%': {
+						backgroundPosition: '100% center',
+					},
+				},
+				'fade-scale': {
+					'0%': {
+						opacity: '0',
+						transform: 'scale(0.95)',
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'scale(1)',
+					},
+				},
+				'fade-up': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)',
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)',
+					},
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -169,6 +197,9 @@ module.exports = {
 				'scale-in': 'scale-in 0.6s ease-out',
 				'bounce-in': 'bounce-in 0.6s ease-out',
 				pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				'gradient-shift': 'gradient-shift 4s ease-in-out infinite',
+				'fade-scale': 'fade-scale 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards',
+				'fade-up': 'fade-up 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards',
 			},
 			boxShadow: {
 				'glow': '0 0 20px rgba(59, 130, 246, 0.3)',
