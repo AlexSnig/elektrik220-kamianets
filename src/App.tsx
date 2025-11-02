@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { AppProvider } from './contexts/AppContext';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
+import WhyChooseUs from './components/WhyChooseUs';
 import ServicesSection from './components/ServicesSection';
 const AboutSection = lazy(() => import('./components/AboutSection'));
 const GallerySection = lazy(() => import('./components/GallerySection'));
@@ -42,6 +43,7 @@ function AppInner() {
       <Header />
       <main className="pt-16 lg:pt-20">
         <HeroSection />
+        <WhyChooseUs />
         <ServicesSection />
         <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження про нас...</div>}>
           <AboutSection />
