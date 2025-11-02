@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Clock, Shield, ChevronRight, Zap, Users, Award } from 'lucide-react';
+import { Phone, ChevronRight, Zap } from 'lucide-react';
 import { useApp } from '../hooks/use-app';
 
 const HeroSection: React.FC = () => {
@@ -15,36 +15,6 @@ const HeroSection: React.FC = () => {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const stats = [
-    {
-      icon: Users,
-      value: companyData?.company?.completed_projects ?? '2000+',
-      label: 'Виконаних проектів',
-    },
-    {
-      icon: Clock,
-      value: '15',
-      label: 'Років досвіду',
-    },
-    {
-      icon: Shield,
-      value: '3',
-      label: 'Років гарантії',
-    },
-    {
-      icon: Award,
-      value: '30 хв',
-      label: 'Час прибуття',
-    },
-  ];
-
-  const keyFeatures = [
-    'Приїзд за 30 хвилин',
-    'Гарантія 3 роки',
-    'Цілодобовий виклик 24/7',
-    '15 років досвіду',
-  ];
 
   return (
     <section id="home" className="relative min-h-screen flex items-center bg-white">
@@ -99,21 +69,6 @@ const HeroSection: React.FC = () => {
               Офіційний чек, гарантія 3 роки.
             </motion.p>
 
-            {/* Key Features */}
-            <motion.div
-              className="grid grid-cols-2 gap-4 mb-8 max-w-lg mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              {keyFeatures.map((feature, index) => (
-                <div key={index} className="flex items-center space-x-2 justify-center">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                  <span className="text-gray-700 text-sm lg:text-base">{feature}</span>
-                </div>
-              ))}
-            </motion.div>
-
             {/* CTA Buttons */}
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
@@ -141,30 +96,6 @@ const HeroSection: React.FC = () => {
                 <span>Розрахувати вартість</span>
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </motion.button>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-            >
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="text-center"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div className="flex items-center justify-center mb-2">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <stat.icon className="w-6 h-6 text-blue-600" />
-                    </div>
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
-                </motion.div>
-              ))}
             </motion.div>
           </motion.div>
         </div>
