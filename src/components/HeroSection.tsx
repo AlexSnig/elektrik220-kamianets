@@ -67,13 +67,7 @@ const HeroSection: React.FC = () => {
   ];
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-40 left-1/2 w-80 h-80 bg-blue-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-      </div>
+    <section id="home" className="relative min-h-screen flex items-center bg-white">
 
       <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-0 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -96,18 +90,15 @@ const HeroSection: React.FC = () => {
             </motion.div>
 
             {/* Main Heading */}
-            <motion.h1
-              className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <span className="block">Електрик</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              <span className="block animate-fade-scale">Електрик</span>
+              <span className="block animate-gradient-text animate-title-glow" style={{ animationDelay: '0.2s' }}>
                 Кам&apos;янець-Подільський
               </span>
-              <span className="block text-2xl sm:text-3xl lg:text-4xl">— Виклик 24/7 220В</span>
-            </motion.h1>
+              <span className="block text-2xl sm:text-3xl lg:text-4xl text-gray-800 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+                — Виклик 24/7 220В
+              </span>
+            </h1>
 
             {/* Description */}
             <motion.p
