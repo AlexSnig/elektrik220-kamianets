@@ -4,6 +4,7 @@ import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import WhyChooseUs from './components/WhyChooseUs';
 import ServicesSection from './components/ServicesSection';
+import CostCalculator from './components/CostCalculator';
 const AboutSection = lazy(() => import('./components/AboutSection'));
 const GallerySection = lazy(() => import('./components/GallerySection'));
 const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'));
@@ -45,6 +46,7 @@ function AppInner() {
         <HeroSection />
         <WhyChooseUs />
         <ServicesSection />
+        <CostCalculator />
         <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження про нас...</div>}>
           <AboutSection />
         </Suspense>
