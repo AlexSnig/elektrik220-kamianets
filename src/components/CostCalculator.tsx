@@ -116,7 +116,7 @@ const CostCalculator: React.FC = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6 }}
         >
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl mb-6 shadow-lg">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-600 rounded-2xl mb-6 shadow-lg">
             <Calculator className="w-8 h-8 text-white" />
           </div>
           <h2 id="calculator-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
@@ -174,7 +174,7 @@ const CostCalculator: React.FC = () => {
                   {/* Outlets */}
                   <div>
                     <label htmlFor="outlets" className="flex items-center text-sm font-semibold text-gray-900 mb-2">
-                      <Zap className="w-4 h-4 mr-2 text-blue-600" />
+                      <Zap className="w-4 h-4 mr-2 text-orange-500" />
                       Кількість розеток
                     </label>
                     <input
@@ -196,7 +196,7 @@ const CostCalculator: React.FC = () => {
                   {/* Light Fixtures */}
                   <div>
                     <label htmlFor="lightFixtures" className="flex items-center text-sm font-semibold text-gray-900 mb-2">
-                      <Lightbulb className="w-4 h-4 mr-2 text-blue-600" />
+                      <Lightbulb className="w-4 h-4 mr-2 text-orange-500" />
                       Кількість світильників
                     </label>
                     <input
@@ -218,7 +218,7 @@ const CostCalculator: React.FC = () => {
                   {/* Wire Length */}
                   <div>
                     <label htmlFor="wireLength" className="flex items-center text-sm font-semibold text-gray-900 mb-2">
-                      <Cable className="w-4 h-4 mr-2 text-blue-600" />
+                      <Cable className="w-4 h-4 mr-2 text-orange-500" />
                       Довжина проводки (метри)
                     </label>
                     <input
@@ -243,7 +243,7 @@ const CostCalculator: React.FC = () => {
                     disabled={!hasAnyInput}
                     className={`w-full py-4 rounded-xl font-semibold text-lg shadow-lg transition-all ${
                       hasAnyInput
-                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:shadow-xl hover:scale-[1.02]'
+                        ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white hover:shadow-xl hover:scale-[1.02]'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}
                     whileHover={hasAnyInput ? { scale: 1.02 } : {}}
@@ -315,7 +315,7 @@ const CostCalculator: React.FC = () => {
                       </div>
 
                       {/* Total */}
-                      <div className="bg-white/10 rounded-xl p-4 mt-6">
+                      <div className="bg-gradient-to-r from-orange-500 to-amber-600 rounded-xl p-4 mt-6 shadow-lg">
                         <div className="flex justify-between items-center">
                           <span className="text-xl font-bold">Загальна вартість:</span>
                           <span className="text-3xl font-bold">{cost.total} грн</span>
@@ -337,7 +337,7 @@ const CostCalculator: React.FC = () => {
                     {/* CTA */}
                     <motion.a
                       href="tel:+380677523103"
-                      className="block w-full bg-white text-blue-600 text-center py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all mt-6"
+                      className="block w-full bg-gradient-to-r from-orange-500 to-amber-600 text-white text-center py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all mt-6"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -346,7 +346,9 @@ const CostCalculator: React.FC = () => {
                   </motion.div>
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-                    <Calculator className="w-16 h-16 text-blue-200" />
+                    <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center">
+                      <Calculator className="w-12 h-12 text-orange-300" />
+                    </div>
                     <h3 className="text-2xl font-bold">Почніть розрахунок</h3>
                     <p className="text-blue-100">
                       Введіть дані в форму зліва, щоб отримати орієнтовну вартість робіт
@@ -359,13 +361,13 @@ const CostCalculator: React.FC = () => {
 
           {/* Additional Info */}
           <motion.div
-            className="mt-8 bg-blue-50 rounded-xl p-6 border border-blue-100"
+            className="mt-8 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-200"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: 0.6 }}
           >
             <div className="flex items-start space-x-3">
-              <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+              <Info className="w-6 h-6 text-orange-600 flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">Що входить у вартість:</h4>
                 <ul className="space-y-1 text-sm text-gray-700">
