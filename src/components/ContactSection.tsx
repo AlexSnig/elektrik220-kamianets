@@ -246,10 +246,10 @@ const ContactSection: React.FC = () => {
                   <div>
                     <div className="font-semibold text-gray-900">Email</div>
                     <a
-                      href={`mailto:${contact?.email}`}
+                      href={`mailto:${contact?.email ?? 'info@elektrik220.km.ua'}`}
                       className="text-blue-600 hover:text-blue-700 transition-colors"
                     >
-                      {contact?.email}
+                      {contact?.email ?? 'info@elektrik220.km.ua'}
                     </a>
                   </div>
                 </div>
@@ -262,10 +262,10 @@ const ContactSection: React.FC = () => {
                   <div>
                     <div className="font-semibold text-gray-900">Години роботи</div>
                     <div className="text-gray-600 space-y-1">
-                      <div>Пн-Пт: {contact?.working_hours.monday_friday}</div>
-                      <div>Сб: {contact?.working_hours.saturday}</div>
-                      <div>Нд: {contact?.working_hours.sunday}</div>
-                      <div className="text-red-600 font-medium">Аварійний виклик: {contact?.working_hours.emergency}</div>
+                      <div>Пн-Пт: {contact?.working_hours?.monday_friday ?? '9:00 - 18:00'}</div>
+                      <div>Сб: {contact?.working_hours?.saturday ?? '10:00 - 16:00'}</div>
+                      <div>Нд: {contact?.working_hours?.sunday ?? 'Вихідний'}</div>
+                      <div className="text-red-600 font-medium">Аварійний виклик: {contact?.working_hours?.emergency ?? '24/7'}</div>
                     </div>
                   </div>
                 </div>
@@ -277,30 +277,36 @@ const ContactSection: React.FC = () => {
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                 <h3 className="text-xl font-bold text-gray-900 mb-6">Соціальні мережі</h3>
                 <div className="flex space-x-4">
-                  <a
-                    href={companyData.social_media.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
-                  >
-                    <Facebook className="w-6 h-6" />
-                  </a>
-                  <a
-                    href={companyData.social_media.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white hover:from-purple-600 hover:to-pink-600 transition-colors"
-                  >
-                    <Instagram className="w-6 h-6" />
-                  </a>
-                  <a
-                    href={companyData.social_media.telegram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
-                  >
-                    <MessageCircle className="w-6 h-6" />
-                  </a>
+                  {companyData.social_media?.facebook && (
+                    <a
+                      href={companyData.social_media.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
+                    >
+                      <Facebook className="w-6 h-6" />
+                    </a>
+                  )}
+                  {companyData.social_media?.instagram && (
+                    <a
+                      href={companyData.social_media.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white hover:from-purple-600 hover:to-pink-600 transition-colors"
+                    >
+                      <Instagram className="w-6 h-6" />
+                    </a>
+                  )}
+                  {companyData.social_media?.telegram && (
+                    <a
+                      href={companyData.social_media.telegram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
+                    >
+                      <MessageCircle className="w-6 h-6" />
+                    </a>
+                  )}
                 </div>
               </div>
             )}
