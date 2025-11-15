@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx vite",
+    "prebuild": "node scripts/generate-sitemap.cjs",
     "build": "npx vite build",
     "lint": "eslint .",
     "preview": "npx vite preview",
