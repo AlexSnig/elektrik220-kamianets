@@ -8,9 +8,9 @@ import { Service } from '../types';
 export const StatsBar: React.FC = () => {
   const { state } = useApp();
   const stats = [
-    { icon: Users, value: state.companyData?.company?.completed_projects ?? '2000+', label: 'Виконаних проектів' },
+    { icon: Users, value: state.companyData?.company?.completed_projects ?? '1000+', label: 'Виконаних проектів' },
     { icon: Clock, value: state.companyData?.company?.experience ?? '10+', label: 'Років досвіду' },
-    { icon: Shield, value: state.companyData?.company?.guarantee ?? '5', label: 'Років гарантії' },
+    { icon: Shield, value: state.companyData?.company?.guarantee ?? '3', label: 'Років гарантії' },
     { icon: Award, value: '24/7', label: 'Аварійний виклик' },
   ];
   return (
