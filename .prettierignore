@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Build output
+dist
+build
+.next
+out
+
+# Cache
+.cache
+.vite
+.turbo
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.production
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+
+# Other
+public/sitemap.xml
+coverage
