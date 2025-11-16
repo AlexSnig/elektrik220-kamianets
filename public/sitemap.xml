@@ -3,7 +3,7 @@
   <!-- Main page -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/</loc>
-    <lastmod>2025-11-15</lastmod>
+    <lastmod>2025-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,7 +11,7 @@
   <!-- services -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#services</loc>
-    <lastmod>2025-11-15</lastmod>
+    <lastmod>2025-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -19,7 +19,7 @@
   <!-- calculator -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#calculator</loc>
-    <lastmod>2025-11-15</lastmod>
+    <lastmod>2025-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -27,7 +27,7 @@
   <!-- about -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#about</loc>
-    <lastmod>2025-11-15</lastmod>
+    <lastmod>2025-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -35,7 +35,7 @@
   <!-- gallery -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#gallery</loc>
-    <lastmod>2025-11-15</lastmod>
+    <lastmod>2025-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -43,7 +43,7 @@
   <!-- testimonials -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#testimonials</loc>
-    <lastmod>2025-11-15</lastmod>
+    <lastmod>2025-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -59,7 +59,7 @@
   <!-- contact -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#contact</loc>
-    <lastmod>2025-11-15</lastmod>
+    <lastmod>2025-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

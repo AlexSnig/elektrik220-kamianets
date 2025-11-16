@@ -23,6 +23,8 @@ html {
 
 .animate-blob {
   animation: blob 7s infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0); /* GPU acceleration hint */
 }
 
 .animation-delay-2000 {
@@ -48,11 +50,17 @@ html {
   overflow: hidden;
 }
 
-/* Smooth hover transitions */
-* {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+/* Smooth hover transitions - OPTIMIZED: Only apply to GPU-accelerated properties */
+/* Remove wildcard selector to prevent 1000+ non-composited animations */
+.service-card-hover, .gallery-image, .image-hover-scale {
+  transition-property: transform, opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+}
+
+/* Only use will-change on elements that will animate immediately */
+.service-card-hover:hover, .gallery-image:hover, .image-hover-scale:hover {
+  will-change: transform;
 }
 
 /* Custom scrollbar */
