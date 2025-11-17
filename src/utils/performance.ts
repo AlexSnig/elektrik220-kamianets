@@ -9,11 +9,11 @@ export function throttle<T extends (...args: any[]) => any>(
   limit: number
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean;
-  return function(this: any, ...args: Parameters<T>) {
+  return function (this: any, ...args: Parameters<T>) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 }
@@ -27,7 +27,7 @@ export function debounce<T extends (...args: any[]) => any>(
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout | null;
-  return function(this: any, ...args: Parameters<T>) {
+  return function (this: any, ...args: Parameters<T>) {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
@@ -36,7 +36,7 @@ export function debounce<T extends (...args: any[]) => any>(
 /**
  * Request Animation Frame wrapper for smooth animations
  */
-export function smoothScroll(element: HTMLElement | null, offset: number = 0) {
+export function smoothScroll(element: HTMLElement | null, offset = 0) {
   if (!element) return;
 
   const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - offset;
@@ -51,9 +51,8 @@ export function smoothScroll(element: HTMLElement | null, offset: number = 0) {
     const progress = Math.min(timeElapsed / duration, 1);
 
     // Easing function (easeInOutCubic)
-    const ease = progress < 0.5
-      ? 4 * progress * progress * progress
-      : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+    const ease =
+      progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 
     window.scrollTo(0, startPosition + distance * ease);
 
@@ -69,22 +68,22 @@ export function smoothScroll(element: HTMLElement | null, offset: number = 0) {
  * Optimized transition config for Framer Motion
  */
 export const springTransition = {
-  type: "spring",
+  type: 'spring' as const,
   stiffness: 300,
   damping: 30,
 };
 
 export const smoothTransition = {
   duration: 0.3,
-  ease: [0.4, 0.0, 0.2, 1], // Material Design easing
+  ease: [0.4, 0.0, 0.2, 1] as [number, number, number, number], // Material Design easing
 };
 
 export const enterTransition = {
   duration: 0.4,
-  ease: [0.0, 0.0, 0.2, 1], // Deceleration curve
+  ease: [0.0, 0.0, 0.2, 1] as [number, number, number, number], // Deceleration curve
 };
 
 export const exitTransition = {
   duration: 0.2,
-  ease: [0.4, 0.0, 1, 1], // Acceleration curve
+  ease: [0.4, 0.0, 1, 1] as [number, number, number, number], // Acceleration curve
 };
