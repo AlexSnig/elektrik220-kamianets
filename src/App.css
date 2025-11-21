@@ -23,6 +23,8 @@ html {
 
 .animate-blob {
   animation: blob 7s infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0); /* GPU acceleration hint */
 }
 
 .animation-delay-2000 {
@@ -48,11 +50,21 @@ html {
   overflow: hidden;
 }
 
-/* Smooth hover transitions */
-* {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+/* Smooth hover transitions - OPTIMIZED: Only apply to GPU-accelerated properties */
+/* Remove wildcard selector to prevent 1000+ non-composited animations */
+.service-card-hover,
+.gallery-image,
+.image-hover-scale {
+  transition-property: transform, opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+}
+
+/* Only use will-change on elements that will animate immediately */
+.service-card-hover:hover,
+.gallery-image:hover,
+.image-hover-scale:hover {
+  will-change: transform;
 }
 
 /* Custom scrollbar */
@@ -140,11 +152,11 @@ a:focus {
   .bg-gray-50 {
     background-color: #ffffff;
   }
-  
+
   .text-gray-600 {
     color: #000000;
   }
-  
+
   .border-gray-200 {
     border-color: #000000;
   }
@@ -157,7 +169,7 @@ a:focus {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .animate-blob,
   .animate-spin {
     animation: none;
@@ -169,7 +181,7 @@ a:focus {
   .auto-dark\:bg-gray-900 {
     background-color: #111827;
   }
-  
+
   .auto-dark\:text-white {
     color: #ffffff;
   }
@@ -182,12 +194,12 @@ a:focus {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Optimize text sizes */
   .text-xs {
     font-size: 0.75rem;
   }
-  
+
   .text-sm {
     font-size: 0.875rem;
   }
@@ -205,12 +217,16 @@ a:focus {
 }
 
 .service-card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: transform, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .service-card-hover:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* Gallery image effects */
@@ -238,7 +254,9 @@ a:focus {
 
 /* Form focus animations */
 .form-input {
-  transition: all 0.3s ease;
+  transition-property: transform, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
 }
 
 .form-input:focus {
@@ -262,7 +280,9 @@ a:focus {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   transform: translate(-50%, -50%);
-  transition: all 0.3s ease;
+  transition-property: width, height;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
 }
 
 .button-ripple:active::before {
@@ -295,7 +315,9 @@ a:focus {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  transition: all 0.1s ease;
+  transition-property: width, height, border-width, border-color, background;
+  transition-duration: 0.1s;
+  transition-timing-function: ease;
   transform: translate(-50%, -50%);
   mix-blend-mode: difference;
 }
@@ -312,7 +334,9 @@ a:focus {
 .scroll-reveal {
   opacity: 0;
   transform: translateY(60px);
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: opacity, transform;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scroll-reveal.active {
@@ -323,7 +347,9 @@ a:focus {
 .scroll-reveal-left {
   opacity: 0;
   transform: translateX(-60px);
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: opacity, transform;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scroll-reveal-left.active {
@@ -334,7 +360,9 @@ a:focus {
 .scroll-reveal-right {
   opacity: 0;
   transform: translateX(60px);
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: opacity, transform;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scroll-reveal-right.active {
@@ -345,7 +373,9 @@ a:focus {
 .scroll-reveal-scale {
   opacity: 0;
   transform: scale(0.8);
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: opacity, transform;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scroll-reveal-scale.active {
@@ -374,7 +404,9 @@ a:focus {
 
 .focus-ring:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--ring-offset) #ffffff, 0 0 0 calc(var(--ring-offset) + 2px) var(--ring-color);
+  box-shadow:
+    0 0 0 var(--ring-offset) #ffffff,
+    0 0 0 calc(var(--ring-offset) + 2px) var(--ring-color);
 }
 
 /* High performance animations */

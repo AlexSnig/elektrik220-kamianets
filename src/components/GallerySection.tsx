@@ -4,10 +4,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { X, ZoomIn, ExternalLink, Award } from 'lucide-react';
+import { Award } from 'lucide-react';
 
 const GallerySection: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -170,14 +169,6 @@ const GallerySection: React.FC = () => {
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <button
-                      onClick={() => setSelectedImage(item.id)}
-                      className="bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors"
-                    >
-                      <ZoomIn className="w-6 h-6" />
-                    </button>
-                  </div>
                 </div>
 
                 {/* Content */}
@@ -190,12 +181,6 @@ const GallerySection: React.FC = () => {
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-blue-600 font-medium">{item.location}</span>
-                    <button
-                      onClick={() => setSelectedImage(item.id)}
-                      className="text-gray-400 hover:text-blue-600 transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </button>
                   </div>
                 </div>
 
@@ -205,47 +190,6 @@ const GallerySection: React.FC = () => {
             ))}
           </AnimatePresence>
         </motion.div>
-
-        {/* Image Modal */}
-        <AnimatePresence>
-          {selectedImage && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80" onClick={() => setSelectedImage(null)}>
-              <motion.div
-                className="relative max-w-4xl w-full"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {(() => {
-                  const item = galleryItems.find(item => item.id === selectedImage);
-                  if (!item) return null;
-                  
-                  return (
-                    <>
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="w-full h-auto rounded-2xl shadow-2xl"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 rounded-b-2xl">
-                        <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
-                        <p className="text-gray-200 mb-2">{item.description}</p>
-                        <p className="text-blue-300 font-medium">{item.location}</p>
-                      </div>
-                      <button
-                        onClick={() => setSelectedImage(null)}
-                        className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-                      >
-                        <X className="w-6 h-6" />
-                      </button>
-                    </>
-                  );
-                })()}
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
 
         {/* CTA Section */}
         <motion.div
@@ -262,7 +206,7 @@ const GallerySection: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+380971234567"
+              href="tel:+380677523103"
               className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-200"
             >
               Замовити консультацію

@@ -2,13 +2,16 @@ import React, { Suspense, lazy } from 'react';
 import { AppProvider } from './contexts/AppContext';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
+import WhyChooseUs from './components/WhyChooseUs';
 import ServicesSection from './components/ServicesSection';
+// Lazy load heavy components to reduce initial bundle size
+const CostCalculator = lazy(() => import('./components/CostCalculator'));
 const AboutSection = lazy(() => import('./components/AboutSection'));
 const GallerySection = lazy(() => import('./components/GallerySection'));
 const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'));
 const BlogSection = lazy(() => import('./components/BlogSection'));
 const FAQSection = lazy(() => import('./components/FAQSection'));
-import ContactSection from './components/ContactSection';
+const ContactSection = lazy(() => import('./components/ContactSection'));
 import Footer from './components/Footer';
 import './App.css';
 
@@ -42,7 +45,11 @@ function AppInner() {
       <Header />
       <main className="pt-16 lg:pt-20">
         <HeroSection />
+        <WhyChooseUs />
         <ServicesSection />
+        <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження калькулятора...</div>}>
+          <CostCalculator />
+        </Suspense>
         <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження про нас...</div>}>
           <AboutSection />
         </Suspense>
@@ -58,7 +65,9 @@ function AppInner() {
         <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження FAQ...</div>}>
           <FAQSection />
         </Suspense>
-        <ContactSection />
+        <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження контактів...</div>}>
+          <ContactSection />
+        </Suspense>
       </main>
       <Footer />
     </div>

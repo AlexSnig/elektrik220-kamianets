@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Check, ArrowRight, Clock, Shield, Phone, Users, Award } from 'lucide-react';
-import { useApp, useLanguage } from '../contexts/AppContext';
+import { useApp } from '../contexts/AppContext';
 import { Service } from '../types';
 
 export const StatsBar: React.FC = () => {
@@ -40,7 +40,7 @@ const ServicesSection: React.FC = () => {
     threshold: 0.1,
   });
 
-  const phoneNumber = state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380 97 123 45 67';
+  const phoneNumber = state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -174,7 +174,7 @@ const ServicesSection: React.FC = () => {
               </div>
 
               {/* Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-indigo-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-indigo-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </motion.div>
           ))}
         </motion.div>

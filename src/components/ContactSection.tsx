@@ -18,6 +18,8 @@ const ContactSection: React.FC = () => {
     preferred_time: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState('');
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -25,7 +27,7 @@ const ContactSection: React.FC = () => {
 
   const companyData = state.companyData;
   const contact = companyData?.contact;
-  const primaryPhone = contact?.phones?.find(p => p.primary)?.number ?? '067-752-31-03';
+  const primaryPhone = contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
 
   // Google Maps configuration
   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
@@ -58,13 +60,80 @@ const ContactSection: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
+
+    // Honeypot check - if filled, it's a bot
+    if (honeypot) {
+      console.log('Bot detected');
+      return;
+    }
+
+    // Client-side validation
+    if (!formData.name.trim() || formData.name.length < 2) {
+      setSubmitError('Будь ласка, введіть коректне ім\'я (мінімум 2 символи)');
+      return;
+    }
+
+    if (!formData.phone.trim() || !/^[\d+\s\-()]{10,}$/.test(formData.phone)) {
+      setSubmitError('Будь ласка, введіть коректний номер телефону');
+      return;
+    }
+
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setSubmitError('Будь ласка, введіть коректний email');
+      return;
+    }
+
+    if (!formData.service) {
+      setSubmitError('Будь ласка, оберіть послугу');
+      return;
+    }
+
+    if (!formData.description.trim() || formData.description.length < 10) {
+      setSubmitError('Будь ласка, детально опишіть роботи (мінімум 10 символів)');
+      return;
+    }
+
+    if (!formData.address.trim()) {
+      setSubmitError('Будь ласка, вкажіть адресу');
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Submit to FormSubmit.co (free email forwarding service)
+      // Replace 'info@elektrik220.km.ua' with your actual email
+      const response = await fetch('https://formsubmit.co/ajax/info@elektrik220.km.ua', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email || 'не вказано',
+          service: formData.service,
+          description: formData.description,
+          address: formData.address,
+          preferred_time: formData.preferred_time || 'не вказано',
+          _subject: `Нова заявка від ${formData.name}`,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Помилка відправки форми');
+      }
+
+      // Success
       alert('Дякуємо за заявку! Ми зв\'яжемося з вами найближчим часом.');
+
+      // Reset form
       setFormData({
         name: '',
         phone: '',
@@ -74,8 +143,12 @@ const ContactSection: React.FC = () => {
         address: '',
         preferred_time: '',
       });
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitError('Виникла помилка при відправці. Будь ласка, зателефонуйте нам: ' + primaryPhone);
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -100,7 +173,7 @@ const ContactSection: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {t('contact.description')}
+            Зв'яжіться з нами для отримання професійної консультації та замовлення послуг електрика
           </p>
         </motion.div>
 
@@ -156,11 +229,11 @@ const ContactSection: React.FC = () => {
                     <MapPin className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900">{t('contact.address')}</div>
+                    <div className="font-semibold text-gray-900">Адреса</div>
                     <div className="text-gray-600">
-                      {contact?.address.street}<br />
-                      {contact?.address.city}, {contact?.address.region}<br />
-                      {contact?.address.postal_code}
+                      {contact?.address?.street ?? 'Рiчна 11'}<br />
+                      {contact?.address?.city ?? 'Кам\'янець-Подільський'}, {contact?.address?.region ?? 'Хмельницька область'}<br />
+                      {contact?.address?.postal_code ?? '32301'}
                     </div>
                   </div>
                 </div>
@@ -173,10 +246,10 @@ const ContactSection: React.FC = () => {
                   <div>
                     <div className="font-semibold text-gray-900">Email</div>
                     <a
-                      href={`mailto:${contact?.email}`}
+                      href={`mailto:${contact?.email ?? 'info@elektrik220.km.ua'}`}
                       className="text-blue-600 hover:text-blue-700 transition-colors"
                     >
-                      {contact?.email}
+                      {contact?.email ?? 'info@elektrik220.km.ua'}
                     </a>
                   </div>
                 </div>
@@ -189,10 +262,10 @@ const ContactSection: React.FC = () => {
                   <div>
                     <div className="font-semibold text-gray-900">Години роботи</div>
                     <div className="text-gray-600 space-y-1">
-                      <div>Пн-Пт: {contact?.working_hours.monday_friday}</div>
-                      <div>Сб: {contact?.working_hours.saturday}</div>
-                      <div>Нд: {contact?.working_hours.sunday}</div>
-                      <div className="text-red-600 font-medium">Аварійний виклик: {contact?.working_hours.emergency}</div>
+                      <div>Пн-Пт: {contact?.working_hours?.monday_friday ?? '9:00 - 18:00'}</div>
+                      <div>Сб: {contact?.working_hours?.saturday ?? '10:00 - 16:00'}</div>
+                      <div>Нд: {contact?.working_hours?.sunday ?? 'Вихідний'}</div>
+                      <div className="text-red-600 font-medium">Аварійний виклик: {contact?.working_hours?.emergency ?? '24/7'}</div>
                     </div>
                   </div>
                 </div>
@@ -204,30 +277,36 @@ const ContactSection: React.FC = () => {
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                 <h3 className="text-xl font-bold text-gray-900 mb-6">Соціальні мережі</h3>
                 <div className="flex space-x-4">
-                  <a
-                    href={companyData.social_media.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
-                  >
-                    <Facebook className="w-6 h-6" />
-                  </a>
-                  <a
-                    href={companyData.social_media.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white hover:from-purple-600 hover:to-pink-600 transition-colors"
-                  >
-                    <Instagram className="w-6 h-6" />
-                  </a>
-                  <a
-                    href={companyData.social_media.telegram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
-                  >
-                    <MessageCircle className="w-6 h-6" />
-                  </a>
+                  {companyData.social_media?.facebook && (
+                    <a
+                      href={companyData.social_media.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
+                    >
+                      <Facebook className="w-6 h-6" />
+                    </a>
+                  )}
+                  {companyData.social_media?.instagram && (
+                    <a
+                      href={companyData.social_media.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white hover:from-purple-600 hover:to-pink-600 transition-colors"
+                    >
+                      <Instagram className="w-6 h-6" />
+                    </a>
+                  )}
+                  {companyData.social_media?.telegram && (
+                    <a
+                      href={companyData.social_media.telegram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
+                    >
+                      <MessageCircle className="w-6 h-6" />
+                    </a>
+                  )}
                 </div>
               </div>
             )}
@@ -365,6 +444,25 @@ const ContactSection: React.FC = () => {
                   />
                 </div>
 
+                {/* Honeypot field - hidden from users, visible to bots */}
+                <div className="hidden" aria-hidden="true">
+                  <input
+                    type="text"
+                    name="honeypot"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
+                {/* Error message */}
+                {submitError && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                    {submitError}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -437,7 +535,7 @@ const ContactSection: React.FC = () => {
             <div className="p-6 bg-gray-50 border-t">
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`}
+                  href="https://www.google.com/maps/place/?q=place_id:ChIJKx7hfRfHM0cR9gFI8ZPSvl4"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors text-center"

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ChevronDown, ChevronUp, HelpCircle, Phone, Clock, Shield, CreditCard, Users, Zap } from 'lucide-react';
+import { ChevronDown, HelpCircle, Phone, Clock, Shield, CreditCard, Users, Zap } from 'lucide-react';
 
 const FAQSection: React.FC = () => {
   const [ref, inView] = useInView({
@@ -84,49 +84,85 @@ const FAQSection: React.FC = () => {
         </motion.div>
 
         <div className="max-w-4xl mx-auto space-y-4">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
-            >
-              <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100"
               >
-                <div className="flex items-center space-x-4 flex-1">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <faq.icon className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 pr-4">
-                    {faq.question}
-                  </h3>
-                </div>
-                <div className="flex-shrink-0">
-                  {openIndex === index ? (
-                    <ChevronUp className="w-5 h-5 text-gray-500" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-500" />
-                  )}
-                </div>
-              </button>
-              
-              {openIndex === index && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="px-8 pb-6"
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
                 >
-                  <div className="pl-16 text-gray-600 leading-relaxed">
-                    {faq.answer}
+                  <div className="flex items-center space-x-4 flex-1">
+                    <motion.div
+                      className="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0"
+                      animate={{
+                        scale: isOpen ? 1.1 : 1,
+                        backgroundColor: isOpen ? 'rgb(37, 99, 235)' : 'rgb(219, 234, 254)'
+                      }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    >
+                      <faq.icon
+                        className={`w-6 h-6 transition-colors duration-300 ${isOpen ? 'text-white' : 'text-blue-600'}`}
+                      />
+                    </motion.div>
+                    <h3 className={`text-lg font-semibold pr-4 transition-colors duration-300 ${isOpen ? 'text-blue-600' : 'text-gray-900'}`}>
+                      {faq.question}
+                    </h3>
                   </div>
-                </motion.div>
-              )}
-            </motion.div>
-          ))}
+                  <motion.div
+                    className="flex-shrink-0"
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  >
+                    <ChevronDown className="w-5 h-5 text-gray-500" />
+                  </motion.div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                        transition: {
+                          height: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] },
+                          opacity: { duration: 0.25, delay: 0.1 }
+                        }
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                        transition: {
+                          height: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] },
+                          opacity: { duration: 0.2 }
+                        }
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-8 pb-6">
+                        <motion.div
+                          className="pl-16 text-gray-600 leading-relaxed"
+                          initial={{ y: -10 }}
+                          animate={{ y: 0 }}
+                          transition={{ duration: 0.3, ease: 'easeOut' }}
+                        >
+                          {faq.answer}
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
 
         <motion.div
@@ -141,7 +177,7 @@ const FAQSection: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:067-752-31-03"
+              href="tel:+380677523103"
               className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-colors inline-flex items-center justify-center space-x-2"
             >
               <Phone className="w-5 h-5" />
