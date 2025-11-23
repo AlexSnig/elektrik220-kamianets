@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ChevronDown, HelpCircle, Phone, Clock, Shield, CreditCard, Users, Zap } from 'lucide-react';
+import {
+  ChevronDown,
+  HelpCircle,
+  Phone,
+  Clock,
+  Shield,
+  CreditCard,
+  Users,
+  Zap,
+} from 'lucide-react';
 
 const FAQSection: React.FC = () => {
   const [ref, inView] = useInView({
@@ -13,43 +22,47 @@ const FAQSection: React.FC = () => {
 
   const faqs = [
     {
-      question: "1. Які терміни виконання робіт?",
-      answer: "Терміни виконання робіт залежать від складності завдання, але ми завжди намагаємося завершити роботу якнайшвидше.",
+      question: '1. Які терміни виконання робіт?',
+      answer:
+        'Терміни виконання робіт залежать від складності завдання, але ми завжди намагаємося завершити роботу якнайшвидше.',
       icon: Clock,
     },
     {
-      question: "2. Чи надаєте ви гарантію на виконані роботи?",
-      answer: "Так, ми надаємо гарантію на роботи від 3 до 10 років залежно від виду робіт.",
+      question: '2. Чи надаєте ви гарантію на виконані роботи?',
+      answer: 'Так, ми надаємо гарантію на роботи від 3 до 10 років залежно від виду робіт.',
       icon: Shield,
     },
     {
-      question: "3. Чи можна викликати електрика в нічний час?",
-      answer: "Так, ми працюємо цілодобово. Аварійний виклик доступний 24/7.",
+      question: '3. Чи можна викликати електрика в нічний час?',
+      answer: 'Так, ми працюємо цілодобово. Аварійний виклик доступний 24/7.',
       icon: Zap,
     },
     {
-      question: "4. Яка вартість прорахунку електромонтажних робіт?",
+      question: '4. Яка вартість прорахунку електромонтажних робіт?',
       answer: "Прорахунок вартості робіт проводиться безкоштовно після огляду об'єкта.",
       icon: CreditCard,
     },
     {
-      question: "5. Які матеріали ви використовуєте у роботі?",
-      answer: "Ми використовуємо тільки сертифіковані матеріали від провідних виробників, що відповідають стандартам ДСТУ.",
+      question: '5. Які матеріали ви використовуєте у роботі?',
+      answer:
+        'Ми використовуємо тільки сертифіковані матеріали від провідних виробників, що відповідають стандартам ДСТУ.',
       icon: Shield,
     },
     {
-      question: "6. Як швидко ви можете приїхати на аварійний виклик?",
-      answer: "На аварійний виклик ми приїжджаємо протягом 30 хвилин у межах Кам'янця-Подільського.",
+      question: '6. Як швидко ви можете приїхати на аварійний виклик?',
+      answer:
+        "На аварійний виклик ми приїжджаємо протягом 30 хвилин у межах Кам'янця-Подільського.",
       icon: Clock,
     },
     {
-      question: "7. Чи є знижки для постійних клієнтів?",
-      answer: "Так, для постійних клієнтів ми надаємо знижки та спеціальні умови співпраці.",
+      question: '7. Чи є знижки для постійних клієнтів?',
+      answer: 'Так, для постійних клієнтів ми надаємо знижки та спеціальні умови співпраці.',
       icon: Users,
     },
     {
-      question: "8. Як оплатити ваші послуги?",
-      answer: "Оплата можлива готівкою, картою або шляхом оплати на рахунок. Оплата після виконання робіт.",
+      question: '8. Як оплатити ваші послуги?',
+      answer:
+        'Оплата можлива готівкою, картою або шляхом оплати на рахунок. Оплата після виконання робіт.',
       icon: CreditCard,
     },
   ];
@@ -103,7 +116,7 @@ const FAQSection: React.FC = () => {
                       className="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0"
                       animate={{
                         scale: isOpen ? 1.1 : 1,
-                        backgroundColor: isOpen ? 'rgb(37, 99, 235)' : 'rgb(219, 234, 254)'
+                        backgroundColor: isOpen ? 'rgb(37, 99, 235)' : 'rgb(219, 234, 254)',
                       }}
                       transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
@@ -111,7 +124,9 @@ const FAQSection: React.FC = () => {
                         className={`w-6 h-6 transition-colors duration-300 ${isOpen ? 'text-white' : 'text-blue-600'}`}
                       />
                     </motion.div>
-                    <h3 className={`text-lg font-semibold pr-4 transition-colors duration-300 ${isOpen ? 'text-blue-600' : 'text-gray-900'}`}>
+                    <h3
+                      className={`text-lg font-semibold pr-4 transition-colors duration-300 ${isOpen ? 'text-blue-600' : 'text-gray-900'}`}
+                    >
                       {faq.question}
                     </h3>
                   </div>
@@ -130,20 +145,20 @@ const FAQSection: React.FC = () => {
                       key="content"
                       initial={{ height: 0, opacity: 0 }}
                       animate={{
-                        height: "auto",
+                        height: 'auto',
                         opacity: 1,
                         transition: {
                           height: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] },
-                          opacity: { duration: 0.25, delay: 0.1 }
-                        }
+                          opacity: { duration: 0.25, delay: 0.1 },
+                        },
                       }}
                       exit={{
                         height: 0,
                         opacity: 0,
                         transition: {
                           height: { duration: 0.3, ease: [0.4, 0.0, 0.2, 1] },
-                          opacity: { duration: 0.2 }
-                        }
+                          opacity: { duration: 0.2 },
+                        },
                       }}
                       className="overflow-hidden"
                     >
@@ -173,7 +188,7 @@ const FAQSection: React.FC = () => {
         >
           <h3 className="text-3xl font-bold mb-4">Не знайшли відповідь?</h3>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Зв'яжіться з нами для консультації. Ми відповімо на всі ваші питання!
+            Зв&apos;яжіться з нами для консультації. Ми відповімо на всі ваші питання!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -184,7 +199,7 @@ const FAQSection: React.FC = () => {
               <span>Зателефонувати</span>
             </a>
             <button
-              onClick={() => window.location.href = '#contact'}
+              onClick={() => (window.location.href = '#contact')}
               className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200"
             >
               Написати повідомлення
@@ -197,4 +212,3 @@ const FAQSection: React.FC = () => {
 };
 
 export default FAQSection;
-

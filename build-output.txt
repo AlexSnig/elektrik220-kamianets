@@ -1,0 +1,33 @@
+
+> react_repo@0.0.0 prebuild
+> node scripts/generate-sitemap.cjs
+
+✅ sitemap.xml згенеровано успішно!
+📊 Кількість статей в блозі: 4
+📅 Дата останньої статті: 2024-06-25
+📍 Кількість URL в sitemap: 8
+
+> react_repo@0.0.0 build
+> npx vite build
+
+vite v6.3.6 building for production...
+transforming...
+✓ 1893 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                               10.38 kB │ gzip:  2.87 kB
+dist/assets/electrical-icon-DRZED8ZY.jpg      40.10 kB
+dist/assets/index-CivRT-MX.css                94.18 kB │ gzip: 15.25 kB
+dist/assets/circle-check-big-DQqfvKBh.js       0.25 kB │ gzip:  0.20 kB
+dist/assets/lightbulb-xRQXMMpN.js              0.33 kB │ gzip:  0.24 kB
+dist/assets/GallerySection-Dp-_Xpm9.js         7.09 kB │ gzip:  2.59 kB
+dist/assets/FAQSection-A9caWuVl.js             7.66 kB │ gzip:  2.80 kB
+dist/assets/TestimonialsSection-BRmR2jML.js    9.75 kB │ gzip:  2.93 kB
+dist/assets/AboutSection-A4T6_g-e.js           9.80 kB │ gzip:  3.04 kB
+dist/assets/BlogSection-S4VEoIMf.js           10.54 kB │ gzip:  3.08 kB
+dist/assets/CostCalculator-C5UsGLGq.js        14.50 kB │ gzip:  3.81 kB
+dist/assets/ContactSection-BqekkjY2.js        19.26 kB │ gzip:  4.67 kB
+dist/assets/react-vendor-pBn5inGn.js         141.78 kB │ gzip: 45.46 kB
+dist/assets/google-maps-qwsTvq8v.js          218.83 kB │ gzip: 37.95 kB
+dist/assets/index-DDMBQCti.js                246.38 kB │ gzip: 61.78 kB
+✓ built in 10.52s

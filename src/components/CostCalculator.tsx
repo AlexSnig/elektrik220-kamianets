@@ -119,7 +119,10 @@ const CostCalculator: React.FC = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-600 rounded-2xl mb-6 shadow-lg">
             <Calculator className="w-8 h-8 text-white" />
           </div>
-          <h2 id="calculator-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2
+            id="calculator-heading"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+          >
             Калькулятор вартості робіт
           </h2>
           <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">
@@ -139,41 +142,51 @@ const CostCalculator: React.FC = () => {
                 <form onSubmit={handleCalculate} className="space-y-6">
                   {/* Work Type */}
                   <div>
-                    <label htmlFor="workType" className="block text-sm font-semibold text-gray-900 mb-3">
+                    <label
+                      htmlFor="workType"
+                      className="block text-sm font-semibold text-gray-900 mb-3"
+                    >
                       Тип робіт
                     </label>
                     <div className="grid grid-cols-1 gap-3">
-                      {(Object.keys(workTypeLabels) as Array<keyof typeof workTypeLabels>).map((type) => (
-                        <label
-                          key={type}
-                          className={`relative flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                            inputs.workType === type
-                              ? 'border-blue-600 bg-blue-50'
-                              : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name="workType"
-                            value={type}
-                            checked={inputs.workType === type}
-                            onChange={(e) => handleInputChange('workType', e.target.value)}
-                            className="sr-only"
-                          />
-                          <div className="flex items-center justify-between w-full">
-                            <span className="font-medium text-gray-900">{workTypeLabels[type]}</span>
-                            {inputs.workType === type && (
-                              <CheckCircle className="w-5 h-5 text-blue-600" />
-                            )}
-                          </div>
-                        </label>
-                      ))}
+                      {(Object.keys(workTypeLabels) as (keyof typeof workTypeLabels)[]).map(
+                        type => (
+                          <label
+                            key={type}
+                            className={`relative flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                              inputs.workType === type
+                                ? 'border-blue-600 bg-blue-50'
+                                : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="workType"
+                              value={type}
+                              checked={inputs.workType === type}
+                              onChange={e => handleInputChange('workType', e.target.value)}
+                              className="sr-only"
+                            />
+                            <div className="flex items-center justify-between w-full">
+                              <span className="font-medium text-gray-900">
+                                {workTypeLabels[type]}
+                              </span>
+                              {inputs.workType === type && (
+                                <CheckCircle className="w-5 h-5 text-blue-600" />
+                              )}
+                            </div>
+                          </label>
+                        )
+                      )}
                     </div>
                   </div>
 
                   {/* Outlets */}
                   <div>
-                    <label htmlFor="outlets" className="flex items-center text-sm font-semibold text-gray-900 mb-2">
+                    <label
+                      htmlFor="outlets"
+                      className="flex items-center text-sm font-semibold text-gray-900 mb-2"
+                    >
                       <Zap className="w-4 h-4 mr-2 text-orange-500" />
                       Кількість розеток
                     </label>
@@ -184,7 +197,7 @@ const CostCalculator: React.FC = () => {
                       min="0"
                       max="100"
                       value={inputs.outlets || ''}
-                      onChange={(e) => handleInputChange('outlets', parseInt(e.target.value) || 0)}
+                      onChange={e => handleInputChange('outlets', parseInt(e.target.value) || 0)}
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-200 outline-none transition-all text-lg"
                       placeholder="0"
                     />
@@ -195,7 +208,10 @@ const CostCalculator: React.FC = () => {
 
                   {/* Light Fixtures */}
                   <div>
-                    <label htmlFor="lightFixtures" className="flex items-center text-sm font-semibold text-gray-900 mb-2">
+                    <label
+                      htmlFor="lightFixtures"
+                      className="flex items-center text-sm font-semibold text-gray-900 mb-2"
+                    >
                       <Lightbulb className="w-4 h-4 mr-2 text-orange-500" />
                       Кількість світильників
                     </label>
@@ -206,7 +222,9 @@ const CostCalculator: React.FC = () => {
                       min="0"
                       max="100"
                       value={inputs.lightFixtures || ''}
-                      onChange={(e) => handleInputChange('lightFixtures', parseInt(e.target.value) || 0)}
+                      onChange={e =>
+                        handleInputChange('lightFixtures', parseInt(e.target.value) || 0)
+                      }
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-200 outline-none transition-all text-lg"
                       placeholder="0"
                     />
@@ -217,7 +235,10 @@ const CostCalculator: React.FC = () => {
 
                   {/* Wire Length */}
                   <div>
-                    <label htmlFor="wireLength" className="flex items-center text-sm font-semibold text-gray-900 mb-2">
+                    <label
+                      htmlFor="wireLength"
+                      className="flex items-center text-sm font-semibold text-gray-900 mb-2"
+                    >
                       <Cable className="w-4 h-4 mr-2 text-orange-500" />
                       Довжина проводки (метри)
                     </label>
@@ -228,7 +249,7 @@ const CostCalculator: React.FC = () => {
                       min="0"
                       max="1000"
                       value={inputs.wireLength || ''}
-                      onChange={(e) => handleInputChange('wireLength', parseInt(e.target.value) || 0)}
+                      onChange={e => handleInputChange('wireLength', parseInt(e.target.value) || 0)}
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-200 outline-none transition-all text-lg"
                       placeholder="0"
                     />
@@ -328,8 +349,9 @@ const CostCalculator: React.FC = () => {
                       <div className="flex items-start space-x-2">
                         <Info className="w-5 h-5 mt-0.5 flex-shrink-0" />
                         <p className="text-sm text-blue-100">
-                          Це орієнтовний розрахунок. Остаточна вартість визначається після огляду об'єкта майстром.
-                          Ціни можуть змінюватися залежно від складності робіт та використаних матеріалів.
+                          Це орієнтовний розрахунок. Остаточна вартість визначається після огляду
+                          об&apos;єкта майстром. Ціни можуть змінюватися залежно від складності
+                          робіт та використаних матеріалів.
                         </p>
                       </div>
                     </div>

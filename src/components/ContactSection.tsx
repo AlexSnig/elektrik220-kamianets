@@ -34,14 +34,14 @@ const ContactSection: React.FC = () => {
   const mapsLoaderResult = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: googleMapsApiKey || 'dummy-key',
-    libraries: googleMapsApiKey ? ['places'] : []
+    libraries: googleMapsApiKey ? ['places'] : [],
   });
   const isLoaded = mapsLoaderResult?.isLoaded ?? false;
   const loadError = mapsLoaderResult?.loadError ?? null;
 
   const mapCenter = {
     lat: contact?.address?.coordinates?.lat ?? 48.672192,
-    lng: contact?.address?.coordinates?.lng ?? 26.5671073
+    lng: contact?.address?.coordinates?.lng ?? 26.5671073,
   };
 
   const mapOptions = {
@@ -51,9 +51,11 @@ const ContactSection: React.FC = () => {
     fullscreenControl: false,
   };
 
-  const fullAddress = `${contact?.address?.street ?? 'Рiчна 11'}, ${contact?.address?.city ?? 'Кам\'янець-Подільський'}, ${contact?.address?.region ?? 'Хмельницька область'}, ${contact?.address?.postal_code ?? '32301'}`;
+  const fullAddress = `${contact?.address?.street ?? 'Рiчна 11'}, ${contact?.address?.city ?? "Кам'янець-Подільський"}, ${contact?.address?.region ?? 'Хмельницька область'}, ${contact?.address?.postal_code ?? '32301'}`;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const target = e.target;
     const name = target.name;
     const value = target.value;
@@ -72,7 +74,7 @@ const ContactSection: React.FC = () => {
 
     // Client-side validation
     if (!formData.name.trim() || formData.name.length < 2) {
-      setSubmitError('Будь ласка, введіть коректне ім\'я (мінімум 2 символи)');
+      setSubmitError("Будь ласка, введіть коректне ім'я (мінімум 2 символи)");
       return;
     }
 
@@ -110,7 +112,7 @@ const ContactSection: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          Accept: 'application/json',
         },
         body: JSON.stringify({
           name: formData.name,
@@ -122,8 +124,8 @@ const ContactSection: React.FC = () => {
           preferred_time: formData.preferred_time || 'не вказано',
           _subject: `Нова заявка від ${formData.name}`,
           _template: 'table',
-          _captcha: 'false'
-        })
+          _captcha: 'false',
+        }),
       });
 
       if (!response.ok) {
@@ -131,7 +133,7 @@ const ContactSection: React.FC = () => {
       }
 
       // Success
-      alert('Дякуємо за заявку! Ми зв\'яжемося з вами найближчим часом.');
+      alert("Дякуємо за заявку! Ми зв'яжемося з вами найближчим часом.");
 
       // Reset form
       setFormData({
@@ -145,7 +147,9 @@ const ContactSection: React.FC = () => {
       });
     } catch (error) {
       console.error('Form submission error:', error);
-      setSubmitError('Виникла помилка при відправці. Будь ласка, зателефонуйте нам: ' + primaryPhone);
+      setSubmitError(
+        'Виникла помилка при відправці. Будь ласка, зателефонуйте нам: ' + primaryPhone
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -173,7 +177,8 @@ const ContactSection: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Зв'яжіться з нами для отримання професійної консультації та замовлення послуг електрика
+            Зв&apos;яжіться з нами для отримання професійної консультації та замовлення послуг
+            електрика
           </p>
         </motion.div>
 
@@ -231,8 +236,11 @@ const ContactSection: React.FC = () => {
                   <div>
                     <div className="font-semibold text-gray-900">Адреса</div>
                     <div className="text-gray-600">
-                      {contact?.address?.street ?? 'Рiчна 11'}<br />
-                      {contact?.address?.city ?? 'Кам\'янець-Подільський'}, {contact?.address?.region ?? 'Хмельницька область'}<br />
+                      {contact?.address?.street ?? 'Рiчна 11'}
+                      <br />
+                      {contact?.address?.city ?? "Кам'янець-Подільський"},{' '}
+                      {contact?.address?.region ?? 'Хмельницька область'}
+                      <br />
                       {contact?.address?.postal_code ?? '32301'}
                     </div>
                   </div>
@@ -265,7 +273,9 @@ const ContactSection: React.FC = () => {
                       <div>Пн-Пт: {contact?.working_hours?.monday_friday ?? '9:00 - 18:00'}</div>
                       <div>Сб: {contact?.working_hours?.saturday ?? '10:00 - 16:00'}</div>
                       <div>Нд: {contact?.working_hours?.sunday ?? 'Вихідний'}</div>
-                      <div className="text-red-600 font-medium">Аварійний виклик: {contact?.working_hours?.emergency ?? '24/7'}</div>
+                      <div className="text-red-600 font-medium">
+                        Аварійний виклик: {contact?.working_hours?.emergency ?? '24/7'}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -322,7 +332,12 @@ const ContactSection: React.FC = () => {
             {/* Contact Form */}
             <div className="bg-white rounded-2xl p-8 shadow-lg">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Залишити заявку</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                onSubmit={e => {
+                  void handleSubmit(e);
+                }}
+                className="space-y-6"
+              >
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -376,7 +391,10 @@ const ContactSection: React.FC = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="service"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Послуга *
                     </label>
                     <select
@@ -388,7 +406,7 @@ const ContactSection: React.FC = () => {
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     >
                       <option value="">Оберіть послугу</option>
-                      {(state.services || []).map((service) => (
+                      {(state.services || []).map(service => (
                         <option key={service.id} value={service.title}>
                           {service.title}
                         </option>
@@ -396,7 +414,10 @@ const ContactSection: React.FC = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="preferred_time" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="preferred_time"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Бажаний час
                     </label>
                     <input
@@ -429,7 +450,10 @@ const ContactSection: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Опис робіт *
                   </label>
                   <textarea
@@ -450,7 +474,7 @@ const ContactSection: React.FC = () => {
                     type="text"
                     name="honeypot"
                     value={honeypot}
-                    onChange={(e) => setHoneypot(e.target.value)}
+                    onChange={e => setHoneypot(e.target.value)}
                     tabIndex={-1}
                     autoComplete="off"
                   />
@@ -502,10 +526,7 @@ const ContactSection: React.FC = () => {
                   zoom={16}
                   options={mapOptions}
                 >
-                  <Marker
-                    position={mapCenter}
-                    title="Електрик 220В - Кам'янець-Подільський"
-                  />
+                  <Marker position={mapCenter} title="Електрик 220В - Кам'янець-Подільський" />
                 </GoogleMap>
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-100">
