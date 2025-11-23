@@ -164,10 +164,16 @@ const Header: React.FC = () => {
               <Phone className="w-5 h-5" />
             </motion.a>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - ПОКРАЩЕНО */}
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-3 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center -mr-3"
+              className={`lg:hidden p-3 rounded-xl min-w-[48px] min-h-[48px] flex items-center justify-center transition-all duration-200 shadow-md ${
+                isMenuOpen 
+                  ? 'bg-blue-600 hover:bg-blue-700' 
+                  : isScrolled 
+                    ? 'bg-white hover:bg-gray-50 border-2 border-gray-300' 
+                    : 'bg-white/90 backdrop-blur-sm hover:bg-white border-2 border-gray-200'
+              }`}
               whileTap={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
               transition={smoothTransition}
@@ -175,9 +181,9 @@ const Header: React.FC = () => {
               aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? (
-                <X className="w-6 h-6 text-gray-900" />
+                <X className="w-7 h-7 text-white" strokeWidth={2.5} />
               ) : (
-                <Menu className="w-6 h-6 text-gray-900" />
+                <Menu className={`w-7 h-7 ${isScrolled ? 'text-gray-900' : 'text-gray-900'}`} strokeWidth={2.5} />
               )}
             </motion.button>
           </div>
