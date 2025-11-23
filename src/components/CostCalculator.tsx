@@ -74,6 +74,10 @@ const CostCalculator: React.FC = () => {
     }));
   };
 
+  useEffect(() => {
+    calculateCost();
+  }, [inputs]);
+
   const calculateCost = () => {
     const prices = pricing[inputs.workType];
 
