@@ -18,7 +18,6 @@ const HeroSection: React.FC = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center bg-white">
-
       <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-24 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Content */}
@@ -47,7 +46,7 @@ const HeroSection: React.FC = () => {
                 style={{
                   animationDelay: '0.2s',
                   WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
+                  WebkitTextFillColor: 'transparent',
                 }}
               >
                 Кам&apos;янець-Подільський
@@ -64,9 +63,9 @@ const HeroSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              Термінова допомога при відключенні світла, вибиванні автоматів.
-              Електромонтажні роботи будь-якої складності: встановлення розеток, заміна електропроводки, підключення електроприладів.
-              Офіційний чек, гарантія 3 роки.
+              Термінова допомога при відключенні світла, вибиванні автоматів. Електромонтажні роботи
+              будь-якої складності: встановлення розеток, заміна електропроводки, підключення
+              електроприладів. Офіційний чек, гарантія 3 роки.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -88,13 +87,18 @@ const HeroSection: React.FC = () => {
               </motion.a>
 
               <motion.button
+                type="button"
                 onClick={handleScrollToContact}
                 className="group border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                aria-label="Розрахувати вартість - перейти до форми контактів"
               >
                 <span>Розрахувати вартість</span>
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ChevronRight
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  aria-hidden="true"
+                />
               </motion.button>
             </motion.div>
           </motion.div>

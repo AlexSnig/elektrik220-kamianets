@@ -56,7 +56,8 @@ const BlogSection: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Корисні статті, поради та рекомендації від професійних електриків. Дізнайтеся більше про електробезпеку та енергозбереження.
+            Корисні статті, поради та рекомендації від професійних електриків. Дізнайтеся більше про
+            електробезпеку та енергозбереження.
           </p>
         </motion.div>
 
@@ -65,7 +66,7 @@ const BlogSection: React.FC = () => {
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? "visible" : "hidden"}
+          animate={inView ? 'visible' : 'hidden'}
         >
           {state.blogArticles.map((article, index) => (
             <motion.article
@@ -91,9 +92,7 @@ const BlogSection: React.FC = () => {
                   {article.title}
                 </h3>
 
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {article.excerpt}
-                </p>
+                <p className="text-gray-600 mb-4 line-clamp-3">{article.excerpt}</p>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -113,12 +112,17 @@ const BlogSection: React.FC = () => {
 
                 {/* Read More Button */}
                 <button
+                  type="button"
                   onClick={() => setSelectedArticle(article)}
                   className="group/btn w-full bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-200 text-gray-700 hover:text-blue-600 py-3 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2"
+                  aria-label={`Читати статтю: ${article.title}`}
                 >
-                  <BookOpen className="w-4 h-4" />
+                  <BookOpen className="w-4 h-4" aria-hidden="true" />
                   <span>Читати далі</span>
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  <ArrowRight
+                    className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
 
@@ -128,7 +132,7 @@ const BlogSection: React.FC = () => {
                   {new Date(article.date).toLocaleDateString('uk-UA', {
                     year: 'numeric',
                     month: 'long',
-                    day: 'numeric'
+                    day: 'numeric',
                   })}
                 </div>
               </div>
@@ -141,8 +145,8 @@ const BlogSection: React.FC = () => {
 
         {/* Article Modal */}
         {selectedArticle && (
-          <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" 
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
             onClick={() => setSelectedArticle(null)}
             role="dialog"
             aria-modal="true"
@@ -152,7 +156,7 @@ const BlogSection: React.FC = () => {
               className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={e => e.stopPropagation()}
             >
               <div className="p-8">
                 {/* Header */}
@@ -167,11 +171,11 @@ const BlogSection: React.FC = () => {
                         <Clock className="w-4 h-4" />
                         <span>{selectedArticle.reading_time}</span>
                       </div>
-                      <span>
-                        {new Date(selectedArticle.date).toLocaleDateString('uk-UA')}
-                      </span>
+                      <span>{new Date(selectedArticle.date).toLocaleDateString('uk-UA')}</span>
                     </div>
-                    <h2 id="modal-title" className="text-3xl font-bold text-gray-900 mb-4">{selectedArticle.title}</h2>
+                    <h2 id="modal-title" className="text-3xl font-bold text-gray-900 mb-4">
+                      {selectedArticle.title}
+                    </h2>
                     <div className="flex flex-wrap gap-2">
                       {selectedArticle.tags.map((tag, index) => (
                         <span
@@ -185,11 +189,24 @@ const BlogSection: React.FC = () => {
                     </div>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setSelectedArticle(null)}
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors ml-4"
+                    aria-label="Закрити статтю"
                   >
-                    <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-6 h-6 text-gray-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -211,7 +228,8 @@ const BlogSection: React.FC = () => {
                       Потрібна допомога електрика?
                     </h3>
                     <p className="text-gray-600 mb-4">
-                      Зв&apos;яжіться з нами для професійної консультації та виконання електричних робіт у Кам&apos;янці-Подільському.
+                      Зв&apos;яжіться з нами для професійної консультації та виконання електричних
+                      робіт у Кам&apos;янці-Подільському.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3">
                       <a
@@ -221,11 +239,15 @@ const BlogSection: React.FC = () => {
                         Викликати електрика
                       </a>
                       <button
+                        type="button"
                         onClick={() => {
                           setSelectedArticle(null);
-                          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                          document
+                            .getElementById('contact')
+                            ?.scrollIntoView({ behavior: 'smooth' });
                         }}
                         className="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors"
+                        aria-label="Залишити заявку - перейти до форми контактів"
                       >
                         Залишити заявку
                       </button>
@@ -247,11 +269,10 @@ const BlogSection: React.FC = () => {
           <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Lightbulb className="w-8 h-8 text-blue-600" />
           </div>
-          <h3 className="text-3xl font-bold text-gray-900 mb-4">
-            Маєте питання з електрики?
-          </h3>
+          <h3 className="text-3xl font-bold text-gray-900 mb-4">Маєте питання з електрики?</h3>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Наша команда готова відповісти на ваші питання та надати професійну консультацію з будь-яких електричних питань.
+            Наша команда готова відповісти на ваші питання та надати професійну консультацію з
+            будь-яких електричних питань.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -261,8 +282,12 @@ const BlogSection: React.FC = () => {
               Безкоштовна консультація
             </a>
             <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              type="button"
+              onClick={() =>
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+              }
               className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200"
+              aria-label="Задати питання - перейти до форми контактів"
             >
               Задати питання
             </button>
