@@ -17,27 +17,25 @@ const TestimonialsSection: React.FC = () => {
   // Auto-rotate testimonials
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      setCurrentIndex(prev => (prev + 1) % testimonials.length);
     }, 5000);
 
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
   const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex(prev => (prev + 1) % testimonials.length);
   };
 
   const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrentIndex(prev => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
-        className={`w-5 h-5 ${
-          index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-        }`}
+        className={`w-5 h-5 ${index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
       />
     ));
   };
@@ -47,7 +45,10 @@ const TestimonialsSection: React.FC = () => {
   }
 
   return (
-    <section id="testimonials" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <section
+      id="testimonials"
+      className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50"
+    >
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -68,7 +69,8 @@ const TestimonialsSection: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Довіра наших клієнтів - найкраща винагорода за нашу роботу. Читайте реальні відгуки людей з Кам&apos;янця-Подільського.
+            Довіра наших клієнтів - найкраща винагорода за нашу роботу. Читайте реальні відгуки
+            людей з Кам&apos;янця-Подільського.
           </p>
         </motion.div>
 
@@ -144,7 +146,9 @@ const TestimonialsSection: React.FC = () => {
                     </div>
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
-                      <span>{new Date(testimonials[currentIndex].date).toLocaleDateString('uk-UA')}</span>
+                      <span>
+                        {new Date(testimonials[currentIndex].date).toLocaleDateString('uk-UA')}
+                      </span>
                     </div>
                   </div>
                   <div className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
@@ -157,31 +161,42 @@ const TestimonialsSection: React.FC = () => {
             {/* Navigation Buttons */}
             <div className="absolute top-1/2 -translate-y-1/2 left-4 lg:-left-16">
               <button
+                type="button"
                 onClick={prevTestimonial}
                 className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-gray-600 hover:text-blue-600 hover:shadow-xl transition-all duration-200"
+                aria-label="Попередній відгук"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-6 h-6" aria-hidden="true" />
               </button>
             </div>
             <div className="absolute top-1/2 -translate-y-1/2 right-4 lg:-right-16">
               <button
+                type="button"
                 onClick={nextTestimonial}
                 className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-gray-600 hover:text-blue-600 hover:shadow-xl transition-all duration-200"
+                aria-label="Наступний відгук"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-6 h-6" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Dots Indicator */}
-          <div className="flex justify-center mt-8 space-x-2">
+          <div
+            className="flex justify-center mt-8 space-x-2"
+            role="group"
+            aria-label="Навігація по відгуках"
+          >
             {testimonials.map((_, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => setCurrentIndex(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-200 ${
                   index === currentIndex ? 'bg-blue-600 w-8' : 'bg-gray-300'
                 }`}
+                aria-label={`Перейти до відгуку ${index + 1}`}
+                aria-current={index === currentIndex ? 'true' : 'false'}
               />
             ))}
           </div>
@@ -201,14 +216,10 @@ const TestimonialsSection: React.FC = () => {
               whileHover={{ y: -5 }}
             >
               {/* Stars */}
-              <div className="flex mb-4">
-                {renderStars(testimonial.rating)}
-              </div>
+              <div className="flex mb-4">{renderStars(testimonial.rating)}</div>
 
               {/* Text */}
-              <p className="text-gray-700 mb-4 line-clamp-3">
-                &ldquo;{testimonial.text}&rdquo;
-              </p>
+              <p className="text-gray-700 mb-4 line-clamp-3">&ldquo;{testimonial.text}&rdquo;</p>
 
               {/* Client Info */}
               <div className="border-t pt-4">
@@ -236,7 +247,8 @@ const TestimonialsSection: React.FC = () => {
         >
           <h3 className="text-3xl font-bold mb-4">Станьте частиною наших задоволених клієнтів!</h3>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Довіртеся професіоналам з багаторічним досвідом. Ваш відгук може стати наступним у нашій колекції!
+            Довіртеся професіоналам з багаторічним досвідом. Ваш відгук може стати наступним у нашій
+            колекції!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -246,8 +258,12 @@ const TestimonialsSection: React.FC = () => {
               Викликати майстра
             </a>
             <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              type="button"
+              onClick={() =>
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+              }
               className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200"
+              aria-label="Залишити заявку - перейти до форми контактів"
             >
               Залишити заявку
             </button>

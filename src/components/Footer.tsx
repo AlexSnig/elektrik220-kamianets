@@ -118,8 +118,9 @@ const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-700 transition-colors"
+                  aria-label="Відвідати нашу сторінку на Facebook"
                 >
-                  <Facebook className="w-5 h-5" />
+                  <Facebook className="w-5 h-5" aria-hidden="true" />
                 </a>
               )}
               {companyData?.social_media?.instagram && (
@@ -128,8 +129,9 @@ const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-colors"
+                  aria-label="Відвідати наш Instagram профіль"
                 >
-                  <Instagram className="w-5 h-5" />
+                  <Instagram className="w-5 h-5" aria-hidden="true" />
                 </a>
               )}
               {companyData?.social_media?.telegram && (
@@ -138,8 +140,9 @@ const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"
+                  aria-label="Написати нам в Telegram"
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <MessageCircle className="w-5 h-5" aria-hidden="true" />
                 </a>
               )}
             </motion.div>
@@ -166,8 +169,10 @@ const Footer: React.FC = () => {
               {quickLinks.map((link, index) => (
                 <li key={index}>
                   <button
+                    type="button"
                     onClick={() => scrollToSection(link.href)}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 text-left"
+                    aria-label={`Перейти до секції ${link.label}`}
                   >
                     {link.label}
                   </button>
@@ -197,8 +202,10 @@ const Footer: React.FC = () => {
               {services.map((service, index) => (
                 <li key={service.id}>
                   <button
+                    type="button"
                     onClick={() => scrollToSection('#services')}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 text-left text-sm"
+                    aria-label={`Переглянути послугу: ${service.title}`}
                   >
                     {service.title}
                   </button>
@@ -337,10 +344,15 @@ const Footer: React.FC = () => {
 
               {/* Scroll to Top Button */}
               <button
+                type="button"
                 onClick={scrollToTop}
                 className="w-10 h-10 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors group"
+                aria-label="Прокрутити до початку сторінки"
               >
-                <ArrowUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUp
+                  className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform"
+                  aria-hidden="true"
+                />
               </button>
             </motion.div>
           </div>

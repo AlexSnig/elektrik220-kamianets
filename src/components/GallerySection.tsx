@@ -19,7 +19,8 @@ const GallerySection: React.FC = () => {
       src: '/images/gallery/wiring-work.jpeg',
       title: 'Заміна електропроводки',
       category: 'wiring',
-      description: 'Повна заміна проводки в 2-кімнатній квартирі з встановленням сучасного електрощита',
+      description:
+        'Повна заміна проводки в 2-кімнатній квартирі з встановленням сучасного електрощита',
       location: 'вул. Соборна',
     },
     {
@@ -72,9 +73,10 @@ const GallerySection: React.FC = () => {
     { id: 'lighting', label: 'Освітлення' },
   ];
 
-  const filteredItems = selectedCategory === 'all' 
-    ? galleryItems 
-    : galleryItems.filter(item => item.category === selectedCategory);
+  const filteredItems =
+    selectedCategory === 'all'
+      ? galleryItems
+      : galleryItems.filter(item => item.category === selectedCategory);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -119,7 +121,8 @@ const GallerySection: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Переглядайте приклади наших робіт. Кожен проект виконаний з дотриманням усіх стандартів безпеки та якості.
+            Переглядайте приклади наших робіт. Кожен проект виконаний з дотриманням усіх стандартів
+            безпеки та якості.
           </p>
         </motion.div>
 
@@ -130,15 +133,18 @@ const GallerySection: React.FC = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          {categories.map((category) => (
+          {categories.map(category => (
             <button
               key={category.id}
+              type="button"
               onClick={() => setSelectedCategory(category.id)}
               className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
                 selectedCategory === category.id
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600'
               }`}
+              aria-label={`Фільтрувати за категорією: ${category.label}`}
+              aria-pressed={selectedCategory === category.id}
             >
               {category.label}
             </button>
@@ -150,7 +156,7 @@ const GallerySection: React.FC = () => {
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? "visible" : "hidden"}
+          animate={inView ? 'visible' : 'hidden'}
         >
           <AnimatePresence mode="sync">
             {filteredItems.map((item, index) => (
@@ -176,9 +182,7 @@ const GallerySection: React.FC = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 mb-3 line-clamp-2">
-                    {item.description}
-                  </p>
+                  <p className="text-gray-600 mb-3 line-clamp-2">{item.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-blue-600 font-medium">{item.location}</span>
                   </div>
@@ -198,11 +202,10 @@ const GallerySection: React.FC = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <h3 className="text-3xl font-bold text-gray-900 mb-4">
-            Хочете такий же результат?
-          </h3>
+          <h3 className="text-3xl font-bold text-gray-900 mb-4">Хочете такий же результат?</h3>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Зв&apos;яжіться з нами, і ми з радістю втілимо ваш проект в життя з такою ж якістю та увагою до деталей.
+            Зв&apos;яжіться з нами, і ми з радістю втілимо ваш проект в життя з такою ж якістю та
+            увагою до деталей.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -212,8 +215,12 @@ const GallerySection: React.FC = () => {
               Замовити консультацію
             </a>
             <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              type="button"
+              onClick={() =>
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+              }
               className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200"
+              aria-label="Написати повідомлення - перейти до форми контактів"
             >
               Написати повідомлення
             </button>

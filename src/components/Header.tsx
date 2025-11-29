@@ -39,13 +39,14 @@ const Header: React.FC = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
       setIsMenuOpen(false);
     }
   }, []);
 
-  const phoneNumber = state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
+  const phoneNumber =
+    state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
 
   return (
     <>
@@ -71,7 +72,7 @@ const Header: React.FC = () => {
               aria-label="Перейти на головну сторінку"
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   scrollToSection('#home');
                 }
@@ -92,14 +93,16 @@ const Header: React.FC = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
-              {navItems.map((item) => (
+              {navItems.map(item => (
                 <motion.button
                   key={item.id}
+                  type="button"
                   onClick={() => scrollToSection(item.href)}
                   className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 relative"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={smoothTransition}
+                  aria-label={`Перейти до секції ${item.label}`}
                 >
                   {item.label}
                 </motion.button>
@@ -168,22 +171,25 @@ const Header: React.FC = () => {
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`lg:hidden p-3 rounded-xl min-w-[48px] min-h-[48px] flex items-center justify-center transition-all duration-200 shadow-md ${
-                isMenuOpen 
-                  ? 'bg-blue-600 hover:bg-blue-700' 
-                  : isScrolled 
-                    ? 'bg-white hover:bg-gray-50 border-2 border-gray-300' 
+                isMenuOpen
+                  ? 'bg-blue-600 hover:bg-blue-700'
+                  : isScrolled
+                    ? 'bg-white hover:bg-gray-50 border-2 border-gray-300'
                     : 'bg-white/90 backdrop-blur-sm hover:bg-white border-2 border-gray-200'
               }`}
               whileTap={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
               transition={smoothTransition}
-              aria-label={isMenuOpen ? "Закрити меню" : "Відкрити меню"}
+              aria-label={isMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
               aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? (
                 <X className="w-7 h-7 text-white" strokeWidth={2.5} />
               ) : (
-                <Menu className={`w-7 h-7 ${isScrolled ? 'text-gray-900' : 'text-gray-900'}`} strokeWidth={2.5} />
+                <Menu
+                  className={`w-7 h-7 ${isScrolled ? 'text-gray-900' : 'text-gray-900'}`}
+                  strokeWidth={2.5}
+                />
               )}
             </motion.button>
           </div>
@@ -218,7 +224,7 @@ const Header: React.FC = () => {
                 type: 'spring',
                 stiffness: 300,
                 damping: 30,
-                mass: 0.8
+                mass: 0.8,
               }}
             >
               <div className="p-4 sm:p-6 h-full overflow-y-auto">
@@ -228,24 +234,34 @@ const Header: React.FC = () => {
                       <Zap className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-base sm:text-lg font-bold text-gray-900 leading-tight">{state.companyData?.company.name ?? 'Електрик 220В'}</h2>
-                      <p className="text-xs sm:text-sm text-gray-600 leading-tight">Кам&#39;янець-Подільський</p>
+                      <h2 className="text-base sm:text-lg font-bold text-gray-900 leading-tight">
+                        {state.companyData?.company.name ?? 'Електрик 220В'}
+                      </h2>
+                      <p className="text-xs sm:text-sm text-gray-600 leading-tight">
+                        Кам&#39;янець-Подільський
+                      </p>
                     </div>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setIsMenuOpen(false)}
                     className="p-2.5 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center flex-shrink-0"
                     aria-label="Закрити меню"
                   >
-                    <X className="w-6 h-6 text-gray-900" />
+                    <X className="w-6 h-6 text-gray-900" aria-hidden="true" />
                   </button>
                 </div>
 
                 {/* Navigation */}
-                <nav className="space-y-2 mb-6 sm:mb-8" role="navigation" aria-label="Головна навігація">
+                <nav
+                  className="space-y-2 mb-6 sm:mb-8"
+                  role="navigation"
+                  aria-label="Головна навігація"
+                >
                   {navItems.map((item, index) => (
                     <motion.button
                       key={item.id}
+                      type="button"
                       onClick={() => scrollToSection(item.href)}
                       className="block w-full text-left text-base sm:text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 font-medium transition-colors py-3 px-4 rounded-lg min-h-[44px] flex items-center"
                       initial={{ opacity: 0, x: 20 }}
@@ -266,7 +282,9 @@ const Header: React.FC = () => {
                   transition={{ delay: 0.5 }}
                 >
                   <div className="text-center p-4 bg-blue-50 rounded-xl">
-                    <div className="text-lg sm:text-xl font-semibold text-gray-900">{phoneNumber}</div>
+                    <div className="text-lg sm:text-xl font-semibold text-gray-900">
+                      {phoneNumber}
+                    </div>
                     <div className="text-sm text-gray-600">24/7 аварійний виклик</div>
                   </div>
                   <motion.a
