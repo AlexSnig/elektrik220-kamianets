@@ -104,7 +104,7 @@ const ServicesSection: React.FC = () => {
             <motion.div
               key={service.id}
               variants={cardVariants}
-              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 h-full flex flex-col"
+              className="group relative glass-card glass-card-hover rounded-2xl transition-all duration-300 overflow-hidden h-full flex flex-col"
               whileHover={{ y: -5 }}
             >
               {/* Urgent Badge */}

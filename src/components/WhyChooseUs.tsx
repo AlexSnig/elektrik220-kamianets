@@ -89,7 +89,7 @@ const WhyChooseUs: React.FC = () => {
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.1 }}
             >
               <article
-                className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl focus-within:shadow-2xl focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 transition-all duration-300 h-full border border-gray-200 overflow-hidden group"
+                className="relative glass-card glass-card-hover rounded-2xl p-6 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 transition-all duration-300 h-full overflow-hidden group"
                 aria-label={feature.ariaLabel}
               >
                 {/* Background gradient on hover */}

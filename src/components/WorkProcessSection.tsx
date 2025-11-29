@@ -88,7 +88,7 @@ const WorkProcessSection: React.FC = () => {
                   </div>
 
                   {/* Card */}
-                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow mt-32 border border-gray-100">
+                  <div className="glass-card glass-card-hover rounded-2xl p-6 transition-shadow mt-32">
                     <div className="flex flex-col items-center text-center">
                       <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center mb-4">
                         <step.icon className="w-8 h-8 text-blue-600" />
@@ -127,7 +127,7 @@ const WorkProcessSection: React.FC = () => {
               </div>
 
               {/* Card */}
-              <div className="bg-white rounded-2xl p-5 shadow-lg border border-gray-100">
+              <div className="glass-card rounded-2xl p-5">
                 <div className="flex items-start space-x-4">
                   <div className="w-14 h-14 flex-shrink-0 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
                     <step.icon className="w-7 h-7 text-blue-600" />
