@@ -4,6 +4,9 @@ import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import WhyChooseUs from './components/WhyChooseUs';
 import ServicesSection from './components/ServicesSection';
+import WorkProcessSection from './components/WorkProcessSection';
+import FloatingCallButton from './components/FloatingCallButton';
+import BottomNav from './components/BottomNav';
 // Lazy load heavy components to reduce initial bundle size
 const CostCalculator = lazy(() => import('./components/CostCalculator'));
 const AboutSection = lazy(() => import('./components/AboutSection'));
@@ -47,6 +50,7 @@ function AppInner() {
         <HeroSection />
         <WhyChooseUs />
         <ServicesSection />
+        <WorkProcessSection />
         <Suspense fallback={<div className="p-8 text-center animate-pulse">Завантаження калькулятора...</div>}>
           <CostCalculator />
         </Suspense>
@@ -70,6 +74,8 @@ function AppInner() {
         </Suspense>
       </main>
       <Footer />
+      <FloatingCallButton />
+      <BottomNav />
     </div>
   );
 }
