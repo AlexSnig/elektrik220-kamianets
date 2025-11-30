@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Facebook, Instagram } from 'lucide-react';
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import { useApp } from '../hooks/use-app';
 import { QuoteRequest } from '../types';
+
+// Declare grecaptcha global type
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+      render: (container: string | HTMLElement, parameters: object) => number;
+    };
+  }
+}
 
 const ContactSection: React.FC = () => {
   const { state } = useApp();
@@ -20,10 +31,38 @@ const ContactSection: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [honeypot, setHoneypot] = useState('');
+  const [recaptchaReady, setRecaptchaReady] = useState(false);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  // Google reCAPTCHA site key from environment variable
+  const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '';
+
+  // Initialize reCAPTCHA v3
+  useEffect(() => {
+    if (recaptchaSiteKey && typeof window !== 'undefined' && window.grecaptcha) {
+      window.grecaptcha.ready(() => {
+        setRecaptchaReady(true);
+      });
+    }
+  }, [recaptchaSiteKey]);
+
+  // Execute reCAPTCHA and get token
+  const executeRecaptcha = useCallback(async (): Promise<string | null> => {
+    if (!recaptchaSiteKey || !recaptchaReady || !window.grecaptcha) {
+      return null;
+    }
+
+    try {
+      const token = await window.grecaptcha.execute(recaptchaSiteKey, { action: 'submit' });
+      return token;
+    } catch (error) {
+      console.error('reCAPTCHA execution error:', error);
+      return null;
+    }
+  }, [recaptchaSiteKey, recaptchaReady]);
 
   const companyData = state.companyData;
   const contact = companyData?.contact;
@@ -68,7 +107,7 @@ const ContactSection: React.FC = () => {
 
     // Honeypot check - if filled, it's a bot
     if (honeypot) {
-      console.log('Bot detected');
+      console.log('Bot detected via honeypot');
       return;
     }
 
@@ -106,26 +145,42 @@ const ContactSection: React.FC = () => {
     setIsSubmitting(true);
 
     try {
+      // Execute Google reCAPTCHA v3 (invisible, no user interaction)
+      let recaptchaToken: string | null = null;
+      if (recaptchaSiteKey && recaptchaReady) {
+        recaptchaToken = await executeRecaptcha();
+        if (!recaptchaToken) {
+          console.warn('reCAPTCHA token not generated, proceeding without it');
+        }
+      }
+
+      // Prepare request body
+      const requestBody: Record<string, string> = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email || 'не вказано',
+        service: formData.service,
+        description: formData.description,
+        address: formData.address,
+        preferred_time: formData.preferred_time || 'не вказано',
+        _subject: `Нова заявка від ${formData.name}`,
+        _template: 'table',
+        _captcha: 'false', // FormSubmit's own captcha (disabled, we use Google's)
+      };
+
+      // Add reCAPTCHA token if available
+      if (recaptchaToken) {
+        requestBody['g-recaptcha-response'] = recaptchaToken;
+      }
+
       // Submit to FormSubmit.co (free email forwarding service)
-      // Replace 'info@elektrik220.km.ua' with your actual email
       const response = await fetch('https://formsubmit.co/ajax/info@elektrik220.km.ua', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email || 'не вказано',
-          service: formData.service,
-          description: formData.description,
-          address: formData.address,
-          preferred_time: formData.preferred_time || 'не вказано',
-          _subject: `Нова заявка від ${formData.name}`,
-          _template: 'table',
-          _captcha: 'false',
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
