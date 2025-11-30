@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Award } from 'lucide-react';
+import OptimizedImage from './ui/OptimizedImage';
 
 const GallerySection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -167,13 +168,15 @@ const GallerySection: React.FC = () => {
                 whileHover={{ y: -5 }}
                 layout
               >
-                {/* Image */}
-                <div className="relative overflow-hidden">
-                  <img
+                {/* Image - Optimized with WebP/AVIF */}
+                <div className="relative overflow-hidden h-64">
+                  <OptimizedImage
                     src={item.src}
                     alt={item.title}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
+                    className="group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    widths={[400, 800, 1200]}
+                    objectFit="cover"
                   />
                 </div>
 
