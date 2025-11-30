@@ -19,6 +19,50 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Escape key handler for mobile menu
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isMenuOpen]);
+
+  // Body scroll lock when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      // Restore scroll position
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+
+    return () => {
+      // Cleanup on unmount
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+    };
+  }, [isMenuOpen]);
+
   const navItems = [
     { id: 'home', label: 'Головна', href: '#home' },
     { id: 'services', label: 'Послуги', href: '#services' },
@@ -226,6 +270,9 @@ const Header: React.FC = () => {
                 damping: 30,
                 mass: 0.8,
               }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="mobile-menu-title"
             >
               <div className="p-4 sm:p-6 h-full overflow-y-auto">
                 <div className="flex items-center justify-between mb-6 sm:mb-8">
@@ -234,7 +281,10 @@ const Header: React.FC = () => {
                       <Zap className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-base sm:text-lg font-bold text-gray-900 leading-tight">
+                      <h2
+                        id="mobile-menu-title"
+                        className="text-base sm:text-lg font-bold text-gray-900 leading-tight"
+                      >
                         {state.companyData?.company.name ?? 'Електрик 220В'}
                       </h2>
                       <p className="text-xs sm:text-sm text-gray-600 leading-tight">

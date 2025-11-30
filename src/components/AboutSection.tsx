@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Award, Shield, Users, Clock, CheckCircle, Zap, Phone } from 'lucide-react';
 import { useApp } from '../hooks/use-app';
+import OptimizedImage from './ui/OptimizedImage';
 
 const AboutSection: React.FC = () => {
   const { state } = useApp();
@@ -173,11 +174,13 @@ const AboutSection: React.FC = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <img
+                <OptimizedImage
                   src="/images/tools-background.jpg"
                   alt="Професійні інструменти електрика"
-                  className="w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] object-cover"
-                  loading="lazy"
+                  className="w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px]"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                  widths={[400, 800, 1200]}
+                  objectFit="cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
               </motion.div>
