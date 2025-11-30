@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Phone,
@@ -320,16 +321,24 @@ const Footer: React.FC = () => {
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <motion.p
-              className="text-gray-400 text-sm text-center md:text-left mb-4 md:mb-0"
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <motion.div
+              className="flex flex-col items-center md:items-start space-y-2"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              © {currentYear} {companyData?.company.name ?? 'Електрик 220В'}. Всі права захищені.
-            </motion.p>
+              <p className="text-gray-400 text-sm text-center md:text-left">
+                © {currentYear} {companyData?.company.name ?? 'Електрик 220В'}. Всі права захищені.
+              </p>
+              <Link
+                to="/privacy-policy"
+                className="text-gray-400 hover:text-blue-400 text-sm transition-colors underline underline-offset-2"
+              >
+                Політика конфіденційності
+              </Link>
+            </motion.div>
 
             <motion.div
               className="flex items-center space-x-6"
