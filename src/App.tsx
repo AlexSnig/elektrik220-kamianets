@@ -8,6 +8,7 @@ import ServicesSection from './components/ServicesSection';
 import WorkProcessSection from './components/WorkProcessSection';
 import FloatingCallButton from './components/FloatingCallButton';
 import BottomNav from './components/BottomNav';
+import Skeleton from './components/ui/Skeleton';
 // Lazy load heavy components to reduce initial bundle size
 const CostCalculator = lazy(() => import('./components/CostCalculator'));
 const AboutSection = lazy(() => import('./components/AboutSection'));
@@ -27,46 +28,30 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <Header />
-      <main className="pt-16 lg:pt-20">
+      <main id="main-content" className="pt-16 lg:pt-20">
         <HeroSection />
         <WhyChooseUs />
         <ServicesSection />
         <WorkProcessSection />
-        <Suspense
-          fallback={
-            <div className="p-8 text-center animate-pulse">Завантаження калькулятора...</div>
-          }
-        >
+        <Suspense fallback={<Skeleton variant="calculator" />}>
           <CostCalculator />
         </Suspense>
-        <Suspense
-          fallback={<div className="p-8 text-center animate-pulse">Завантаження про нас...</div>}
-        >
+        <Suspense fallback={<Skeleton variant="section" count={4} />}>
           <AboutSection />
         </Suspense>
-        <Suspense
-          fallback={<div className="p-8 text-center animate-pulse">Завантаження галереї...</div>}
-        >
+        <Suspense fallback={<Skeleton variant="gallery" />}>
           <GallerySection />
         </Suspense>
-        <Suspense
-          fallback={<div className="p-8 text-center animate-pulse">Завантаження відгуків...</div>}
-        >
+        <Suspense fallback={<Skeleton variant="card" count={3} />}>
           <TestimonialsSection />
         </Suspense>
-        <Suspense
-          fallback={<div className="p-8 text-center animate-pulse">Завантаження блогу...</div>}
-        >
+        <Suspense fallback={<Skeleton variant="card" count={3} />}>
           <BlogSection />
         </Suspense>
-        <Suspense
-          fallback={<div className="p-8 text-center animate-pulse">Завантаження FAQ...</div>}
-        >
+        <Suspense fallback={<Skeleton variant="section" count={6} />}>
           <FAQSection />
         </Suspense>
-        <Suspense
-          fallback={<div className="p-8 text-center animate-pulse">Завантаження контактів...</div>}
-        >
+        <Suspense fallback={<Skeleton variant="section" count={1} />}>
           <ContactSection />
         </Suspense>
       </main>
@@ -116,9 +101,7 @@ function AppInner() {
         <Route
           path="/privacy-policy"
           element={
-            <Suspense
-              fallback={<div className="p-8 text-center animate-pulse">Завантаження...</div>}
-            >
+            <Suspense fallback={<Skeleton variant="section" count={3} />}>
               <PrivacyPolicy />
             </Suspense>
           }

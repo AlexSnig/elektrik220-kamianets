@@ -418,9 +418,72 @@
     ]
   }
   </script>
+
+  <!-- Schema.org BreadcrumbList for Navigation -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Головна",
+        "item": "https://elektrik220-kamianets.vercel.app/#home"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Послуги",
+        "item": "https://elektrik220-kamianets.vercel.app/#services"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Калькулятор вартості",
+        "item": "https://elektrik220-kamianets.vercel.app/#calculator"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Про нас",
+        "item": "https://elektrik220-kamianets.vercel.app/#about"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Галерея робіт",
+        "item": "https://elektrik220-kamianets.vercel.app/#gallery"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "name": "Відгуки клієнтів",
+        "item": "https://elektrik220-kamianets.vercel.app/#testimonials"
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "name": "Блог",
+        "item": "https://elektrik220-kamianets.vercel.app/#blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "name": "Контакти",
+        "item": "https://elektrik220-kamianets.vercel.app/#contact"
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
+  <!-- Skip Links for WCAG 2.2 Accessibility -->
+  <a href="#main-content" class="skip-link">Перейти до основного вмісту</a>
+  <a href="#services" class="skip-link">Перейти до послуг</a>
+  <a href="#contact" class="skip-link">Перейти до контактів</a>
+
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
