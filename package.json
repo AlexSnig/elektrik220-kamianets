@@ -14,7 +14,9 @@
     "typecheck": "tsc -b",
     "typecheck:watch": "tsc -b --watch",
     "clean": "rm -rf dist node_modules/.vite",
-    "prepare": "husky"
+    "prepare": "husky",
+    "optimize-images": "node scripts/optimize-images.cjs",
+    "optimize:all": "npm run optimize-images && npm run build"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
