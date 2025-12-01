@@ -15,8 +15,8 @@ const WhyChooseUs: React.FC = () => {
   const features = [
     {
       icon: Award,
-      title: 'Досвід 15 років',
-      description: 'Професійний досвід роботи з електромонтажу будь-якої складності',
+      title: '15 років досвіду',
+      description: 'Кваліфіковані електромонтажні роботи від простих до складних проектів',
       color: 'from-blue-600 to-blue-700',
       bgColor: 'bg-blue-50',
       iconColor: 'text-blue-700',
@@ -24,8 +24,8 @@ const WhyChooseUs: React.FC = () => {
     },
     {
       icon: Zap,
-      title: 'Аварійна служба 24/7',
-      description: 'Цілодобова підтримка та аварійний виклик у будь-який час доби',
+      title: 'Працюємо цілодобово',
+      description: 'Екстрений виклик електрика доступний 24 години на добу, 7 днів на тиждень',
       color: 'from-amber-500 to-orange-600',
       bgColor: 'bg-amber-50',
       iconColor: 'text-amber-700',
@@ -33,8 +33,8 @@ const WhyChooseUs: React.FC = () => {
     },
     {
       icon: Shield,
-      title: 'Гарантія 3 роки',
-      description: 'Офіційна гарантія на всі види виконаних робіт та матеріалів',
+      title: '3-річна гарантія',
+      description: 'Підтверджена документально гарантія на роботи та встановлені матеріали',
       color: 'from-green-600 to-emerald-700',
       bgColor: 'bg-green-50',
       iconColor: 'text-green-700',

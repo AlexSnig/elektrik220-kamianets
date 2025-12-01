@@ -24,15 +24,15 @@ const AboutSection: React.FC = () => {
     },
     {
       icon: Clock,
-  value: companyData?.company.experience ?? '10+',
+  value: companyData?.company.experience ?? '15',
       label: 'Років на ринку',
       description: 'Багаторічний досвід у сфері електромонтажу',
     },
     {
       icon: Shield,
-  value: companyData?.company.guarantee ?? '5',
-      label: 'Років гарантії',
-      description: 'Довгострокова гарантія на всі роботи',
+  value: companyData?.company.guarantee ?? '3',
+      label: 'Роки гарантії',
+      description: 'Офіційна гарантія на всі види робіт',
     },
     {
       icon: Award,
@@ -45,18 +45,18 @@ const AboutSection: React.FC = () => {
   const advantages = [
     {
       icon: Zap,
-      title: 'Швидкий відгук',
-      description: 'Приїжджаємо протягом 30 хвилин у Кам\'янці-Подільському',
+      title: 'Швидкий виїзд',
+      description: 'Майстер прибуває на об\'єкт за 30 хвилин у межах міста',
     },
     {
       icon: Shield,
-      title: 'Гарантія безпеки',
-      description: 'Всі роботи виконуємо згідно з нормами безпеки та стандартами',
+      title: 'Безпека робіт',
+      description: 'Дотримуємось усіх норм ПУЕ та стандартів електробезпеки ДСТУ',
     },
     {
       icon: Award,
-      title: 'Сертифіковані майстри',
-      description: 'Команда професіоналів з офіційними допусками та сертифікатами',
+      title: 'Кваліфіковані спеціалісти',
+      description: 'Електрики з офіційними допусками до робіт підвищеної небезпеки',
     },
     {
       icon: Users,

@@ -24,12 +24,12 @@ const FAQSection: React.FC = () => {
     {
       question: '1. Які терміни виконання робіт?',
       answer:
-        'Терміни виконання робіт залежать від складності завдання, але ми завжди намагаємося завершити роботу якнайшвидше.',
+        'Прості роботи (заміна розетки, вимикача, підключення світильника) - 1-2 години. Середні роботи (встановлення кількох розеток, прокладка кабелю) - 3-8 годин. Складні роботи (повна заміна проводки, монтаж електрощита) - від 1 до 5 днів залежно від площі приміщення.',
       icon: Clock,
     },
     {
       question: '2. Чи надаєте ви гарантію на виконані роботи?',
-      answer: 'Так, ми надаємо гарантію на роботи від 3 до 10 років залежно від виду робіт.',
+      answer: 'Так, ми надаємо офіційну гарантію 3 роки на всі електромонтажні роботи. Гарантія підтверджується чеком та договором. При виникненні будь-яких проблем протягом гарантійного терміну - виправляємо безкоштовно.',
       icon: Shield,
     },
     {
@@ -39,7 +39,7 @@ const FAQSection: React.FC = () => {
     },
     {
       question: '4. Яка вартість прорахунку електромонтажних робіт?',
-      answer: "Прорахунок вартості робіт проводиться безкоштовно після огляду об'єкта.",
+      answer: "Консультація та оцінка вартості робіт - безкоштовно. Майстер приїде на об'єкт, оцінить обсяг робіт, підрахує необхідні матеріали та надасть детальну кошторисну калькуляцію. Виїзд для оцінки по Кам'янцю-Подільському також безкоштовний.",
       icon: CreditCard,
     },
     {
@@ -56,7 +56,7 @@ const FAQSection: React.FC = () => {
     },
     {
       question: '7. Чи є знижки для постійних клієнтів?',
-      answer: 'Так, для постійних клієнтів ми надаємо знижки та спеціальні умови співпраці.',
+      answer: 'Так! Для постійних клієнтів діє накопичувальна система знижок та пріоритетний виїзд майстра. При замовленні комплексних робіт (від 3 послуг одночасно) - знижка до 15%. Також маємо спеціальні ціни для організацій та управителів ОСББ.',
       icon: Users,
     },
     {
@@ -181,30 +181,22 @@ const FAQSection: React.FC = () => {
         </div>
 
         <motion.div
-          className="mt-16 text-center bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-8 lg:p-12 text-white"
+          className="mt-16 text-center bg-gradient-to-r from-indigo-600 to-purple-700 rounded-3xl p-8 lg:p-12 text-white"
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <h3 className="text-3xl font-bold mb-4">Не знайшли відповідь?</h3>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Зв&apos;яжіться з нами для консультації. Ми відповімо на всі ваші питання!
+          <h3 className="text-3xl font-bold mb-4">Залишились запитання?</h3>
+          <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+            Подзвоніть нам прямо зараз - детально проконсультуємо та дамо рекомендації по телефону.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="tel:+380677523103"
-              className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-colors inline-flex items-center justify-center space-x-2"
-            >
-              <Phone className="w-5 h-5" />
-              <span>Зателефонувати</span>
-            </a>
-            <button
-              onClick={() => (window.location.href = '#contact')}
-              className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200"
-            >
-              Написати повідомлення
-            </button>
-          </div>
+          <a
+            href="tel:+380677523103"
+            className="inline-flex items-center justify-center space-x-2 bg-white text-indigo-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+          >
+            <Phone className="w-5 h-5" />
+            <span>Подзвонити зараз</span>
+          </a>
         </motion.div>
       </div>
     </section>

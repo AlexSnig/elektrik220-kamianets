@@ -253,25 +253,17 @@ const ServicesSection: React.FC = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <h3 className="text-3xl font-bold mb-4">Не знайшли потрібну послугу?</h3>
+          <h3 className="text-3xl font-bold mb-4">Потрібна інша електромонтажна послуга?</h3>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Зв&apos;яжіться з нами для консультації. Ми вирішуємо будь-які електричні завдання!
+            Телефонуйте для безкоштовної консультації. Вирішуємо нестандартні електричні завдання будь-якої складності.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={`tel:${phoneNumber}`}
-              className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-colors inline-flex items-center justify-center space-x-2"
-            >
-              <Phone className="w-5 h-5" />
-              <span>Безкоштовна консультація</span>
-            </a>
-            <button
-              onClick={() => window.location.href = '#contact'}
-              className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200"
-            >
-              Написати повідомлення
-            </button>
-          </div>
+          <a
+            href={`tel:${phoneNumber}`}
+            className="inline-flex items-center justify-center space-x-2 bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+          >
+            <Phone className="w-5 h-5" />
+            <span>Отримати консультацію</span>
+          </a>
         </motion.div>
       </div>
     </section>
