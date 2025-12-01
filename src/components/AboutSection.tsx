@@ -213,49 +213,6 @@ const AboutSection: React.FC = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* Working Process */}
-        <motion.div
-          className="mt-20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">Як ми працюємо</h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Простий та прозорий процес співпраці від дзвінка до завершення робіт
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { step: '1', title: 'Дзвінок', desc: 'Зв\'язуйтеся з нами будь-яким зручним способом' },
-              { step: '2', title: 'Діагностика', desc: 'Виїжджаємо та проводимо безкоштовну діагностику' },
-              { step: '3', title: 'Роботи', desc: 'Виконуємо роботи якісно та в обумовлені терміни' },
-              { step: '4', title: 'Гарантія', desc: 'Надаємо гарантію та подальшу підтримку' },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                className="text-center relative"
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-              >
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                  {item.step}
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h4>
-                <p className="text-gray-600">{item.desc}</p>
-                
-                {/* Connector Line */}
-                {index < 3 && (
-                  <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-blue-300 to-transparent -z-10"></div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
