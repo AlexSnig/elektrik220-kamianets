@@ -3,7 +3,7 @@
   <!-- Main page -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,7 +11,7 @@
   <!-- services -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#services</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -19,7 +19,7 @@
   <!-- calculator -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#calculator</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -27,7 +27,7 @@
   <!-- about -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#about</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -35,7 +35,7 @@
   <!-- gallery -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#gallery</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -43,7 +43,7 @@
   <!-- testimonials -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#testimonials</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -59,9 +59,105 @@
   <!-- contact -->
   <url>
     <loc>https://elektrik220-kamianets.vercel.app/#contact</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/emergency-call</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/wiring-replacement</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/new-wiring</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/grounding</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/video-surveillance</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/lightning-protection</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/outlet-installation</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/outlet-replacement</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/lighting-installation</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/generator-connection</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/circuit-breaker</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Main page -->
+  <url>
+    <loc>https://elektrik220-kamianets.vercel.app/posluhy/electrical-panel</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>

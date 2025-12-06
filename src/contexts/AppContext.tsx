@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useReducer, useEffect, useState, ReactNode } from 'react';
 import { AppState, AppAction, initialState, appReducer } from './app-context-core';
-import { Service, Testimonial, CompanyData, BlogArticle } from '../types';
+import { Service, Testimonial, CompanyData, BlogArticle, ServiceSEO } from '../types';
 
 type Language = 'uk' | 'ru' | 'en';
 
@@ -202,22 +202,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         dispatch({ type: 'SET_LOADING', payload: true });
 
         // Load all data concurrently
-        const [servicesRes, testimonialsRes, companyRes, blogRes] = await Promise.all([
+        const [servicesRes, testimonialsRes, companyRes, blogRes, serviceSEORes] = await Promise.all([
           fetch('/data/services.json'),
           fetch('/data/testimonials.json'),
           fetch('/data/company.json'),
           fetch('/data/blog.json'),
+          fetch('/data/service-seo.json'),
         ]);
 
-        if (!servicesRes.ok || !testimonialsRes.ok || !companyRes.ok || !blogRes.ok) {
+        if (!servicesRes.ok || !testimonialsRes.ok || !companyRes.ok || !blogRes.ok || !serviceSEORes.ok) {
           throw new Error('Failed to load data');
         }
 
-        const [servicesData, testimonialsData, companyData, blogData] = await Promise.all([
+        const [servicesData, testimonialsData, companyData, blogData, serviceSEOData] = await Promise.all([
           servicesRes.json() as Promise<{ services: Service[] }>,
           testimonialsRes.json() as Promise<{ testimonials: Testimonial[] }>,
           companyRes.json() as Promise<CompanyData>,
           blogRes.json() as Promise<{ articles: BlogArticle[] }>,
+          serviceSEORes.json() as Promise<{ services: ServiceSEO[] }>,
         ]);
 
         // Basic runtime validation and dispatch
@@ -232,6 +234,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         }
         if (blogData && Array.isArray(blogData.articles)) {
           dispatch({ type: 'SET_BLOG_ARTICLES', payload: blogData.articles });
+        }
+        if (serviceSEOData && Array.isArray(serviceSEOData.services)) {
+          dispatch({ type: 'SET_SERVICE_SEO', payload: serviceSEOData.services });
         }
       } catch (error) {
         dispatch({ type: 'SET_ERROR', payload: 'Помилка завантаження даних' });

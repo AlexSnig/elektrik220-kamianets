@@ -1,10 +1,11 @@
-import { Service, Testimonial, CompanyData, BlogArticle } from '../types';
+import { Service, Testimonial, CompanyData, BlogArticle, ServiceSEO } from '../types';
 
 export interface AppState {
   services: Service[];
   testimonials: Testimonial[];
   companyData: CompanyData | null;
   blogArticles: BlogArticle[];
+  serviceSEO: ServiceSEO[];
   loading: boolean;
   error: string | null;
 }
@@ -15,13 +16,15 @@ export type AppAction =
   | { type: 'SET_SERVICES'; payload: Service[] }
   | { type: 'SET_TESTIMONIALS'; payload: Testimonial[] }
   | { type: 'SET_COMPANY_DATA'; payload: CompanyData }
-  | { type: 'SET_BLOG_ARTICLES'; payload: BlogArticle[] };
+  | { type: 'SET_BLOG_ARTICLES'; payload: BlogArticle[] }
+  | { type: 'SET_SERVICE_SEO'; payload: ServiceSEO[] };
 
 export const initialState: AppState = {
   services: [],
   testimonials: [],
   companyData: null,
   blogArticles: [],
+  serviceSEO: [],
   loading: true,
   error: null,
 };
@@ -40,6 +43,8 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, companyData: action.payload };
     case 'SET_BLOG_ARTICLES':
       return { ...state, blogArticles: action.payload };
+    case 'SET_SERVICE_SEO':
+      return { ...state, serviceSEO: action.payload };
     default:
       return state;
   }

@@ -27,6 +27,18 @@ function getBlogData() {
   }
 }
 
+// Читаємо дані послуг
+function getServicesData() {
+  try {
+    const servicesPath = path.join(DATA_DIR, 'services.json');
+    const data = JSON.parse(fs.readFileSync(servicesPath, 'utf8'));
+    return data.services || [];
+  } catch (error) {
+    console.warn('Не вдалось прочитати services.json:', error.message);
+    return [];
+  }
+}
+
 // Знаходимо найновішу дату статті
 function getLatestBlogDate(articles) {
   if (articles.length === 0) return new Date().toISOString().split('T')[0];
@@ -39,6 +51,7 @@ function getLatestBlogDate(articles) {
 // Генеруємо sitemap.xml
 function generateSitemap() {
   const articles = getBlogData();
+  const services = getServicesData();
   const latestBlogDate = getLatestBlogDate(articles);
   const today = new Date().toISOString().split('T')[0];
 
@@ -95,6 +108,16 @@ function generateSitemap() {
     }
   ];
 
+  // Додаємо окремі сторінки послуг (GEO-оптимізація!)
+  services.forEach(service => {
+    urls.push({
+      loc: `${BASE_URL}/posluhy/${service.id}`,
+      lastmod: today,
+      changefreq: 'monthly',
+      priority: service.urgent ? '0.9' : '0.8' // Термінові послуги з вищим пріоритетом
+    });
+  });
+
   // Генеруємо XML
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -113,6 +136,7 @@ ${urls.map(url => `  <!-- ${url.loc.split('#')[1] || 'Main page'} -->
 
   console.log('✅ sitemap.xml згенеровано успішно!');
   console.log(`📊 Кількість статей в блозі: ${articles.length}`);
+  console.log(`🔧 Кількість послуг: ${services.length}`);
   console.log(`📅 Дата останньої статті: ${latestBlogDate}`);
   console.log(`📍 Кількість URL в sitemap: ${urls.length}`);
 }

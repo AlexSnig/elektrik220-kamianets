@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Menu, X, Zap, Clock } from 'lucide-react';
 import { useApp } from '../hooks/use-app';
@@ -6,6 +7,8 @@ import { throttle, smoothTransition } from '../utils/performance';
 
 const Header: React.FC = () => {
   const { state } = useApp();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -75,6 +78,16 @@ const Header: React.FC = () => {
   ];
 
   const scrollToSection = useCallback((href: string) => {
+    setIsMenuOpen(false);
+
+    // Якщо ми не на головній сторінці, переходимо на неї з hash
+    if (location.pathname !== '/') {
+      navigate(`/${href}`);
+      // Скролл буде виконано в useEffect після навігації
+      return;
+    }
+
+    // Якщо ми на головній сторінці, скролимо до секції
     const element = document.querySelector(href);
     if (element) {
       const headerOffset = 80;
@@ -85,9 +98,30 @@ const Header: React.FC = () => {
         top: offsetPosition,
         behavior: 'smooth',
       });
-      setIsMenuOpen(false);
     }
-  }, []);
+  }, [location.pathname, navigate]);
+
+  // Скролл до секції після навігації на головну сторінку з hash
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      // Невелика затримка для завантаження сторінки
+      const timer = setTimeout(() => {
+        const element = document.querySelector(location.hash);
+        if (element) {
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   const phoneNumber =
     state.companyData?.contact?.phones?.find(p => p.primary)?.number ?? '+380677523103';
@@ -112,13 +146,23 @@ const Header: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               transition={smoothTransition}
-              onClick={() => scrollToSection('#home')}
+              onClick={() => {
+                if (location.pathname !== '/') {
+                  navigate('/');
+                } else {
+                  scrollToSection('#home');
+                }
+              }}
               aria-label="Перейти на головну сторінку"
               role="button"
               tabIndex={0}
               onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  scrollToSection('#home');
+                  if (location.pathname !== '/') {
+                    navigate('/');
+                  } else {
+                    scrollToSection('#home');
+                  }
                 }
               }}
             >
