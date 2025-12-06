@@ -8,6 +8,17 @@ export interface Service {
   features: string[];
 }
 
+export interface FAQ {
+  question: string;
+  answer: string;
+}
+
+export interface ServiceSEO {
+  id: string;
+  metaDescription: string;
+  faq: FAQ[];
+}
+
 export interface Testimonial {
   id: number;
   name: string;
