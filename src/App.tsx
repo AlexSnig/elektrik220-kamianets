@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AppProvider } from './contexts/AppContext';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
@@ -18,6 +19,7 @@ const BlogSection = lazy(() => import('./components/BlogSection'));
 const FAQSection = lazy(() => import('./components/FAQSection'));
 const ContactSection = lazy(() => import('./components/ContactSection'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
+const ServicePage = lazy(() => import('./components/ServicePage'));
 import Footer from './components/Footer';
 import './App.css';
 
@@ -106,6 +108,14 @@ function AppInner() {
             </Suspense>
           }
         />
+        <Route
+          path="/posluhy/:serviceId"
+          element={
+            <Suspense fallback={<Skeleton variant="section" count={4} />}>
+              <ServicePage />
+            </Suspense>
+          }
+        />
       </Routes>
     </Router>
   );
@@ -113,9 +123,11 @@ function AppInner() {
 
 function App() {
   return (
-    <AppProvider>
-      <AppInner />
-    </AppProvider>
+    <HelmetProvider>
+      <AppProvider>
+        <AppInner />
+      </AppProvider>
+    </HelmetProvider>
   );
 }
 
