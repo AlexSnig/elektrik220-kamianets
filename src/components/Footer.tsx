@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Phone,
@@ -18,15 +18,29 @@ import { useApp } from '../hooks/use-app';
 
 const Footer: React.FC = () => {
   const { state } = useApp();
+  const navigate = useNavigate();
+  const location = useLocation();
   const companyData = state.companyData;
   const contact = companyData?.contact;
   const primaryPhone = contact?.phones?.find(p => p.primary)?.number ?? '+380 97 123 45 67';
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Якщо ми не на головній сторінці, переходимо на неї, інакше скролимо вгору
+    if (location.pathname !== '/') {
+      navigate('/');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const scrollToSection = (href: string) => {
+    // Якщо ми не на головній сторінці, переходимо на неї з hash
+    if (location.pathname !== '/') {
+      navigate(`/${href}`);
+      return;
+    }
+
+    // Якщо ми на головній сторінці, скролимо до секції
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -202,14 +216,13 @@ const Footer: React.FC = () => {
             >
               {services.map((service, index) => (
                 <li key={service.id}>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('#services')}
-                    className="text-gray-300 hover:text-blue-400 transition-colors duration-200 text-left text-sm"
+                  <Link
+                    to={`/posluhy/${service.id}`}
+                    className="text-gray-300 hover:text-blue-400 transition-colors duration-200 text-sm block"
                     aria-label={`Переглянути послугу: ${service.title}`}
                   >
                     {service.title}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </motion.ul>
